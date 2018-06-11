@@ -4,6 +4,7 @@ import android.widget.Toast
 import cn.adair.itooler_kotlin.iTooler
 
 /**
+ * 吐司
  * cn.adair.itool_kotlin.toast
  * Created by Administrator on 2018/5/14/014.
  * slight negligence may lead to great disaster~

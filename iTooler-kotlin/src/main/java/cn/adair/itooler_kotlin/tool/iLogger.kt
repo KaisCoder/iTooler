@@ -5,6 +5,7 @@ import android.util.Log
 import cn.adair.itooler_kotlin.iTooler
 
 /**
+ * 日志
  * cn.adair.itool_kotlin.tool
  * Created by Administrator on 2018/5/14/014.
  * slight negligence may lead to great disaster~
@@ -36,7 +37,7 @@ object iLogger {
     }
 
     private fun GetLocation(): String {
-        var clazName = iLogger::class.java.name
+        val clazName = iLogger::class.java.name
         val traces = Thread.currentThread().stackTrace
         var found = false
         for (trace in traces) {
