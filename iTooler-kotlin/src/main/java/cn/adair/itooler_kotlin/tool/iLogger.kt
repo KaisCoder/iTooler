@@ -35,7 +35,7 @@ object iLogger {
         if (iTooler.isDebug) Log.e(iTooler.TAG, GetLocation() + msg)
     }
 
-    fun GetLocation(): String {
+    private fun GetLocation(): String {
         var clazName = iLogger::class.java.name
         val traces = Thread.currentThread().stackTrace
         var found = false
@@ -52,7 +52,7 @@ object iLogger {
         return "[]: "
     }
 
-    fun GetClassName(clazz: Class<*>?): String {
+    private fun GetClassName(clazz: Class<*>?): String {
         if (clazz != null) {
             if (!TextUtils.isEmpty(clazz.simpleName)) {
                 return clazz.simpleName
