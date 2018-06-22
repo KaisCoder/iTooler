@@ -117,7 +117,6 @@ object iStatusBar {
     }
 
     //------------------------->
-
     /** android 6.0设置字体颜色  */
     @RequiresApi(Build.VERSION_CODES.M)
     fun darkModeForM(window: Window, dark: Boolean) {
@@ -156,9 +155,7 @@ object iStatusBar {
             } catch (var8: Exception) {
                 Log.e("StatusBar", "darkIcon: failed")
             }
-
         }
-
         return result
     }
 
@@ -180,7 +177,6 @@ object iStatusBar {
             e.printStackTrace()
             false
         }
-
     }
 
     /** 增加View的paddingTop,增加的值为状态栏高度  */

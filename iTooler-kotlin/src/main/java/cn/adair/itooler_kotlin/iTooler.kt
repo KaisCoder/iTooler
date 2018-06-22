@@ -21,9 +21,9 @@ object iTooler {
         return this
     }
 
-    fun isDebug(isDebug: Boolean, tag: String?): iTooler {
+    fun isDebug(isDebug: Boolean, tag: String): iTooler {
         this.isDebug = isDebug
-        if (null != tag) this.TAG = tag
+        this.TAG = tag
         return this
     }
 

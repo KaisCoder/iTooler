@@ -3,6 +3,8 @@ package cn.adair.itooler_sample;
 import android.app.Application;
 
 import cn.adair.itooler_kotlin.iTooler;
+import cn.adair.itooler_kotlin.tool.iLogger;
+import cn.adair.itooler_kotlin.util.iFileUtil;
 
 /**
  * cn.adair.itooler_sample
@@ -15,5 +17,7 @@ public class SampleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         iTooler.INSTANCE.init(this).isDebug(true, "Sample").initOther(this);
+
+        iLogger.INSTANCE.e(iFileUtil.INSTANCE.isFilePath("images"));
     }
 }
