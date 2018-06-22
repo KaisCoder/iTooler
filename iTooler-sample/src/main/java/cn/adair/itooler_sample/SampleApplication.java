@@ -17,7 +17,5 @@ public class SampleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         iTooler.INSTANCE.init(this).isDebug(true, "Sample").initOther(this);
-
-        iLogger.INSTANCE.e(iFileUtil.INSTANCE.isFilePath("images"));
     }
 }

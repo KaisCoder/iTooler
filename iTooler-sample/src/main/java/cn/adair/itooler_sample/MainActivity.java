@@ -9,6 +9,7 @@ import cn.adair.itooler_kotlin.statusbar.iStatusBar;
 import cn.adair.itooler_kotlin.tool.iLogger;
 import cn.adair.itooler_kotlin.tool.iToaster;
 import cn.adair.itooler_kotlin.tool.iUuider;
+import cn.adair.itooler_kotlin.util.iFileUtil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
                 iLogger.INSTANCE.e();
                 iLogger.INSTANCE.e(iUuider.Companion.deviceUuid().toString());
+
+                iLogger.INSTANCE.e(iFileUtil.INSTANCE.isFilePath("images"));
 
             }
         });
