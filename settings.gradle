@@ -1,1 +1,1 @@
-include ':iTooler-kotlin', ':iTooler-sample'
+include ':iTooler-kotlin', ':iTooler-sample',":appupdate"

@@ -9,7 +9,6 @@ android {
         targetSdkVersion 27
         versionCode 3
         versionName "0.3"
-
     }
 
     buildTypes {

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/appupdate/appupdate.iml" filepath="$PROJECT_DIR$/appupdate/appupdate.iml" />
       <module fileurl="file://$PROJECT_DIR$/iTooler.iml" filepath="$PROJECT_DIR$/iTooler.iml" />
       <module fileurl="file://$PROJECT_DIR$/iTooler-kotlin/iTooler-kotlin.iml" filepath="$PROJECT_DIR$/iTooler-kotlin/iTooler-kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/iTooler-sample/iTooler-sample.iml" filepath="$PROJECT_DIR$/iTooler-sample/iTooler-sample.iml" />

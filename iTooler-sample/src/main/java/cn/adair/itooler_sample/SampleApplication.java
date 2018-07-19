@@ -2,6 +2,8 @@ package cn.adair.itooler_sample;
 
 import android.app.Application;
 
+import com.azhon.appupdate.config.UpdateConfiguration;
+
 import cn.adair.itooler_kotlin.iTooler;
 import cn.adair.itooler_kotlin.tool.iLogger;
 import cn.adair.itooler_kotlin.util.iFileUtil;
@@ -18,4 +20,5 @@ public class SampleApplication extends Application {
         super.onCreate();
         iTooler.INSTANCE.init(this).isDebug(true, "Sample").initOther(this);
     }
+
 }
