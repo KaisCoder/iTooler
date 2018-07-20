@@ -35,7 +35,6 @@ public final class NotificationUtil {
 
     /**
      * 构建一个消息
-     *
      * @param context 上下文
      * @param icon    图标id
      * @param title   标题
@@ -108,7 +107,7 @@ public final class NotificationUtil {
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Log.e("---->",apk.getPath());
+            Log.e("---->", apk.getPath());
             uri = FileProvider.getUriForFile(context.getApplicationContext(), authorities + ".fileprovider", apk);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {

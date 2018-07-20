@@ -13,6 +13,9 @@ object iFileUtil {
 
     private val isSDCardAvailable: Boolean = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
 
+    /**
+     * 创建一个文件夹并返回文件路径
+     */
     fun isFilePath(folder: String): String {
         var sb = StringBuilder()
         if (isSDCardAvailable) {

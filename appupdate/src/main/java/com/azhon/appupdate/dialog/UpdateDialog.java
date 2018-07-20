@@ -33,7 +33,6 @@ import com.azhon.appupdate.utils.ScreenUtil;
  * @author 阿钟
  */
 
-
 public class UpdateDialog extends Dialog implements View.OnClickListener {
 
     private Context context;

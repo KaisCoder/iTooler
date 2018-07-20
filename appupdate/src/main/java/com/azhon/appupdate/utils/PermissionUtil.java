@@ -25,16 +25,13 @@ public final class PermissionUtil {
 
     /**
      * 检查存储空间权限
-     *
      * @return
      */
     public static boolean checkStoragePermission(Context context) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         return true;
@@ -42,13 +39,10 @@ public final class PermissionUtil {
 
     /**
      * 请求这个库需要的权限
-     *
      * @return
      */
     public static void requestPermission(Activity activity, int requestCode) {
-        ActivityCompat.requestPermissions(activity,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
     }
 
     /**
