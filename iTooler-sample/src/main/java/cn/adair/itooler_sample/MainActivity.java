@@ -1,6 +1,5 @@
 package cn.adair.itooler_sample;
 
-import android.app.NotificationChannel;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ import com.azhon.appupdate.manager.DownloadManager;
 
 import java.io.File;
 
+import cn.adair.itooler_kotlin.notice.NoticeUtil;
 import cn.adair.itooler_kotlin.statusbar.iStatusBar;
 import cn.adair.itooler_kotlin.tool.iLogger;
 import cn.adair.itooler_kotlin.tool.iToaster;
@@ -72,6 +72,15 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
 //                                        .download();
                             }
                         }).create().show();
+            }
+        });
+
+        findViewById(R.id.show).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容");
+//                NoticeUtil.INSTANCE.showProgressNotification(MainActivity.this,R.mipmap.ic_launcher,"消息标题","消息内容",100,50);
+                NoticeUtil.INSTANCE.showDoneNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", getPackageName(), new File(iFileUtil.INSTANCE.isFilePath("update")));
             }
         });
 

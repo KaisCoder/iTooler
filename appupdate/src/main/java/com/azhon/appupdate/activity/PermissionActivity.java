@@ -1,6 +1,7 @@
 package com.azhon.appupdate.activity;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import com.azhon.appupdate.utils.PermissionUtil;
  * @author 阿钟
  */
 public class PermissionActivity extends AppCompatActivity {
+
 
     private static final String TAG = "PermissionActivity";
 
