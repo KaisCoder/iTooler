@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
         findViewById(R.id.show).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容");
+                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容");
 //                NoticeUtil.INSTANCE.showProgressNotification(MainActivity.this,R.mipmap.ic_launcher,"消息标题","消息内容",100,50);
-                NoticeUtil.INSTANCE.showDoneNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", getPackageName(), new File(iFileUtil.INSTANCE.isFilePath("update")));
+//                NoticeUtil.INSTANCE.showDoneNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", getPackageName(), new File(iFileUtil.INSTANCE.isFilePath("update")));
             }
         });
 

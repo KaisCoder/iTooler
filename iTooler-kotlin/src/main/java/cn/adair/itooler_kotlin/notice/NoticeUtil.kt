@@ -10,8 +10,10 @@ import android.net.Uri
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.FileProvider
 import cn.adair.itooler_kotlin.tool.iLogger
+import cn.adair.itooler_kotlin.update.DownloadService
 import java.io.File
 
 /**
@@ -29,8 +31,15 @@ object NoticeUtil {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             channelId = getNoticeChannelId()
         }
-        return NotificationCompat.Builder(context, channelId).setSmallIcon(icon).setAutoCancel(false).setContentTitle(title)
-                .setWhen(System.currentTimeMillis()).setContentText(content).setOngoing(true)
+        return NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(icon)     //设置小图标
+                .setContentTitle(title) //设置通知标题
+                .setContentText(content)//设置通知内容
+                .setAutoCancel(false)  //点击通知后自动清除
+                .setPriority(NotificationCompat.PRIORITY_MAX)   //优先级
+                .setDefaults(Notification.DEFAULT_ALL)  //默认声音震动闪光
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(true)
     }
 
     /**
@@ -55,7 +64,7 @@ object NoticeUtil {
     }
 
     /**
-     * 下载完成通知
+     * 下载完成通知，点击安装
      */
     fun showDoneNotification(context: Context, icon: Int, title: String, content: String, authorities: String, apk: File) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -79,6 +88,33 @@ object NoticeUtil {
         val notification = builder.build()
         notification.flags = notification.flags or Notification.FLAG_AUTO_CANCEL
         manager.notify(1001, notification)
+    }
+
+    /**
+     * 下载错误，点击重新下载
+     */
+    fun showErrorNotification(context: Context, icon: Int, title: String, content: String) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            afterO(manager)
+        }
+        val intent = Intent(context, DownloadService::class.java)
+        val pi = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val builder = builderNotification(context, icon, title, content)
+                .setAutoCancel(true)
+                .setOngoing(false)
+                .setContentIntent(pi)
+                .setDefaults(Notification.DEFAULT_SOUND)
+        manager.notify(1001, builder.build())
+    }
+
+    /**
+     * 获取通知栏开关状态
+     * @return true |false
+     */
+    fun notificationEnable(context: Context): Boolean {
+        val notificationManagerCompat = NotificationManagerCompat.from(context)
+        return notificationManagerCompat.areNotificationsEnabled()
     }
 
 

@@ -56,7 +56,6 @@ public final class DownloadService extends Service implements OnDownloadListener
         return super.onStartCommand(intent, flags, startId);
     }
 
-
     private void init() {
         apkUrl = DownloadManager.getInstance().getApkUrl();
         apkName = DownloadManager.getInstance().getApkName();

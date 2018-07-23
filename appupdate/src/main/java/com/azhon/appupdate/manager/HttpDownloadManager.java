@@ -50,8 +50,7 @@ public class HttpDownloadManager extends BaseHttpDownloadManager {
         this.apkUrl = apkUrl;
         this.apkName = apkName;
         this.listener = listener;
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
             @Override
             public Thread newThread(@NonNull Runnable r) {
                 Thread thread = new Thread(r);
