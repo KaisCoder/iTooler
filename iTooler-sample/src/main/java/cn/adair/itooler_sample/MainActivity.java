@@ -1,7 +1,6 @@
 package cn.adair.itooler_sample;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.view.View;
 
 import com.azhon.appupdate.config.UpdateConfiguration;
 import com.azhon.appupdate.listener.OnDownloadListener;
-import com.azhon.appupdate.manager.DownloadManager;
 
 import java.io.File;
 
@@ -19,7 +17,7 @@ import cn.adair.itooler_kotlin.statusbar.iStatusBar;
 import cn.adair.itooler_kotlin.tool.iLogger;
 import cn.adair.itooler_kotlin.tool.iToaster;
 import cn.adair.itooler_kotlin.tool.iUuider;
-import cn.adair.itooler_kotlin.update.PermissionActivity;
+import cn.adair.itooler_kotlin.update.DownloadManager;
 import cn.adair.itooler_kotlin.util.iFileUtil;
 
 
@@ -63,13 +61,11 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                         .setPositiveButton("升级", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(MainActivity.this, PermissionActivity.class));
-//                                DownloadManager manager = DownloadManager.getInstance(MainActivity.this);
-//                                manager.setApkName("YiDao.apk")
-//                                        .setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk")
-//                                        .setDownloadPath(iFileUtil.INSTANCE.isFilePath("update"))
-//                                        .setSmallIcon(R.mipmap.ic_launcher)
-//                                        .download();
+                                DownloadManager manager = DownloadManager.Companion.getInstance(MainActivity.this);
+                                manager.setSmallIcon(R.mipmap.ic_launcher);
+                                manager.setApkName("YiDao.apk");
+                                manager.setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk");
+                                manager.download();
                             }
                         }).create().show();
             }
@@ -107,19 +103,19 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                 //设置下载过程的监听
                 .setOnDownloadListener(this);
 
-        DownloadManager manager = DownloadManager.getInstance(this);
-        manager.setApkName("YiDao.apk")
-                .setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setShowNewerToast(true)
-                .setConfiguration(configuration)
-                .setDownloadPath(iFileUtil.INSTANCE.isFilePath("update"))
-                .setApkVersionCode(2)
-                .setApkVersionName("2.1.8")
-                .setApkSize("20.4")
-                .setAuthorities(getPackageName())
-                .setApkDescription("1.支持断点下载\n2.支持Android N\n3.支持Android O\n4.支持自定义下载过程\n5.支持 设备>=Android M 动态权限的申请\n6.支持通知栏进度条展示(或者自定义显示进度)")
-                .download();
+//        DownloadManager manager = DownloadManager.getInstance(this);
+//        manager.setApkName("YiDao.apk")
+//                .setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk")
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setShowNewerToast(true)
+//                .setConfiguration(configuration)
+//                .setDownloadPath(iFileUtil.INSTANCE.isFilePath("update"))
+//                .setApkVersionCode(2)
+//                .setApkVersionName("2.1.8")
+//                .setApkSize("20.4")
+//                .setAuthorities(getPackageName())
+//                .setApkDescription("1.支持断点下载\n2.支持Android N\n3.支持Android O\n4.支持自定义下载过程\n5.支持 设备>=Android M 动态权限的申请\n6.支持通知栏进度条展示(或者自定义显示进度)")
+//                .download();
     }
 
 

@@ -37,7 +37,7 @@ object NoticeUtil {
                 .setContentText(content)//设置通知内容
                 .setAutoCancel(false)  //点击通知后自动清除
                 .setPriority(NotificationCompat.PRIORITY_MAX)   //优先级
-                .setDefaults(Notification.DEFAULT_ALL)  //默认声音震动闪光
+//                .setDefaults(Notification.DEFAULT_ALL)  //默认声音震动闪光
                 .setWhen(System.currentTimeMillis())
                 .setOngoing(true)
     }

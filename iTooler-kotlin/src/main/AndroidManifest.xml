@@ -13,7 +13,7 @@
             android:name=".update.PermissionActivity"
             android:label=""
             android:theme="@style/PermissionTheme" />
-        <!--<service android:name=".service.DownloadService" />-->
+        <service android:name=".update.DownloadService" />
     </application>
 
 </manifest>

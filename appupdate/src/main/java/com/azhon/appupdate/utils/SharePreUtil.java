@@ -131,8 +131,7 @@ public final class SharePreUtil {
      */
     public static String lookSharePre(Context context) {
         try {
-            FileInputStream stream = new FileInputStream(new File("/data/data/" +
-                    context.getPackageName() + "/shared_prefs", SHARE_NAME + ".xml"));
+            FileInputStream stream = new FileInputStream(new File("/data/data/" + context.getPackageName() + "/shared_prefs", SHARE_NAME + ".xml"));
             BufferedReader bff = new BufferedReader(new InputStreamReader(stream));
             String line;
             StringBuilder sb = new StringBuilder();

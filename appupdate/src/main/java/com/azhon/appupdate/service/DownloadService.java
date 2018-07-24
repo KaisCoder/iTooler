@@ -169,7 +169,6 @@ public final class DownloadService extends Service implements OnDownloadListener
         @Override
         public void handleMessage(Message msg) {
             Toast.makeText(DownloadService.this, "正在后台下载新版本...", Toast.LENGTH_SHORT).show();
-
         }
     };
 
