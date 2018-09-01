@@ -42,6 +42,24 @@ object NoticeUtil {
                 .setOngoing(true)
     }
 
+    private fun builderNotification(context: Context, icon: Int, title: String, content: String, intent: Intent): NotificationCompat.Builder {
+        var channelId = ""
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            channelId = getNoticeChannelId()
+        }
+        val pi = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(icon)     //设置小图标
+                .setContentTitle(title) //设置通知标题
+                .setContentText(content)//设置通知内容
+                .setAutoCancel(true)  //点击通知后自动清除
+                .setContentIntent(pi)
+                .setPriority(NotificationCompat.PRIORITY_MAX)   //优先级
+//                .setDefaults(Notification.DEFAULT_ALL)  //默认声音震动闪光
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(true)
+    }
+
     /**
      * 展示消息通知
      */
@@ -53,6 +71,19 @@ object NoticeUtil {
         val builder = builderNotification(context, icon, title, content).setDefaults(Notification.DEFAULT_SOUND)
         manager.notify(1001, builder.build())
     }
+
+    /**
+     * 展示消息通知
+     */
+    fun showNotification(context: Context, icon: Int, title: String, content: String, intent: Intent) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            afterO(manager)
+        }
+        val builder = builderNotification(context, icon, title, content, intent).setDefaults(Notification.DEFAULT_SOUND)
+        manager.notify(1001, builder.build())
+    }
+
 
     /**
      * 展示带进度条通知

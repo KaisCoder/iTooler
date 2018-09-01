@@ -1,6 +1,7 @@
 package cn.adair.itooler_sample;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -74,7 +75,12 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
         findViewById(R.id.show).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容");
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setClass(MainActivity.this, TestActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// 关键的一步，设置启动模式
+                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", intent);
 //                NoticeUtil.INSTANCE.showProgressNotification(MainActivity.this,R.mipmap.ic_launcher,"消息标题","消息内容",100,50);
 //                NoticeUtil.INSTANCE.showDoneNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", getPackageName(), new File(iFileUtil.INSTANCE.isFilePath("update")));
             }
