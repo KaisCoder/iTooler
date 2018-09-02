@@ -12,8 +12,6 @@ import cn.adair.itooler_kotlin.util.PermissionUtil
  */
 class DownloadManager private constructor() {
 
-    private val TAG = "DownloadManager"
-
     /**
      * 上下文
      */
@@ -93,7 +91,6 @@ class DownloadManager private constructor() {
             }
             return INSTANCE!!
         }
-
     }
 
 
@@ -209,40 +206,6 @@ class DownloadManager private constructor() {
             return
         }
         context!!.startService(Intent(context, DownloadService::class.java))
-    }
-
-    /**
-     * 检查参数
-     */
-    private fun checkParams(): Boolean {
-        if (TextUtils.isEmpty(apkUrl)) {
-            throw RuntimeException("apkUrl can not be empty!")
-        }
-        if (TextUtils.isEmpty(apkName)) {
-            throw RuntimeException("apkName can not be empty!")
-        }
-        if (TextUtils.isEmpty(downloadPath)) {
-            throw RuntimeException("downloadPath can not be empty!")
-        }
-        if (smallIcon == -1) {
-            throw RuntimeException("smallIcon can not be empty!")
-        }
-        //如果用户没有进行配置，则使用默认的配置
-        if (configuration == null) {
-            configuration = UpdateConfig()
-        }
-        //设置了 VersionCode 则库中进行对话框逻辑处理
-        if (apkVersionCode > 1) {
-            if (TextUtils.isEmpty(apkDescription)) {
-                throw RuntimeException("apkDescription can not be empty!")
-            }
-            return false
-        }
-        //如果设置了小于的versionCode 你不是在写bug就是脑子瓦塌拉
-        if (apkVersionCode < 1) {
-            throw RuntimeException("apkVersionCode can not be < 1")
-        }
-        return true
     }
 
     /**

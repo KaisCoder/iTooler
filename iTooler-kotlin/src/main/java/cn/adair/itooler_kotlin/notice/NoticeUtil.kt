@@ -84,7 +84,6 @@ object NoticeUtil {
         manager.notify(1001, builder.build())
     }
 
-
     /**
      * 展示带进度条通知
      */
@@ -147,7 +146,6 @@ object NoticeUtil {
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         return notificationManagerCompat.areNotificationsEnabled()
     }
-
 
     /**
      * 适配android O 版本消息通知

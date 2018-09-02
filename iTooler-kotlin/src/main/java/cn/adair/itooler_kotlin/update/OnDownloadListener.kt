@@ -12,26 +12,26 @@ interface OnDownloadListener {
     /**
      * 开始下载
      */
-    abstract fun start()
+    fun start()
 
     /**
      * 下载中
      * @param max      总进度
      * @param progress 当前进度
      */
-    abstract fun downloading(max: Int, progress: Int)
+    fun downloading(max: Int, progress: Int)
 
     /**
      * 下载完成
      * @param apk 下载好的apk
      */
-    abstract fun done(apk: File)
+    fun done(apk: File)
 
     /**
      * 下载出错
      * @param e 错误信息
      */
-    abstract fun error(e: Exception)
+    fun error(e: Exception)
 
 
 }

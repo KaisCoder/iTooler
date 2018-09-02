@@ -8,9 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.azhon.appupdate.config.UpdateConfiguration;
-import com.azhon.appupdate.listener.OnDownloadListener;
-
 import java.io.File;
 
 import cn.adair.itooler_kotlin.notice.NoticeUtil;
@@ -19,6 +16,8 @@ import cn.adair.itooler_kotlin.tool.iLogger;
 import cn.adair.itooler_kotlin.tool.iToaster;
 import cn.adair.itooler_kotlin.tool.iUuider;
 import cn.adair.itooler_kotlin.update.DownloadManager;
+import cn.adair.itooler_kotlin.update.OnDownloadListener;
+import cn.adair.itooler_kotlin.update.UpdateConfiguration;
 import cn.adair.itooler_kotlin.util.iFileUtil;
 
 
@@ -65,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                                 DownloadManager manager = DownloadManager.Companion.getInstance(MainActivity.this);
                                 manager.setSmallIcon(R.mipmap.ic_launcher);
                                 manager.setApkName("YiDao.apk");
+                                manager.setAuthorities(getPackageName());
+                                manager.setDownloadPath(iFileUtil.INSTANCE.isFilePath("update"));
                                 manager.setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk");
                                 manager.download();
                             }
