@@ -1,4 +1,4 @@
-package cn.adair.itooler.sample;
+package cn.adair.itooler;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.view.View;
 
 import java.io.File;
 
+import cn.adair.itooler.R;
 import cn.adair.itooler.notice.NoticeUtil;
 import cn.adair.itooler.statusbar.iStatusBar;
 import cn.adair.itooler.tool.iLogger;

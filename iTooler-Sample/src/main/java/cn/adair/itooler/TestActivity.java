@@ -1,4 +1,4 @@
-package cn.adair.itooler.sample;
+package cn.adair.itooler;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

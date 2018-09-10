@@ -1,4 +1,4 @@
-package cn.adair.itooler.sample;
+package cn.adair.itooler;
 
 import android.app.Application;
 import android.content.Context;
