@@ -5,6 +5,7 @@ import cn.adair.itooler.iTooler
 import java.io.File
 
 /**
+ * 文件管理
  * cn.adair.itooler_kotlin.tool
  * Created by Administrator on 2018/6/22/022.
  * slight negligence may lead to great disaster~

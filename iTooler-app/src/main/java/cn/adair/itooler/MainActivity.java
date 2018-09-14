@@ -1,5 +1,7 @@
 package cn.adair.itooler;
 
+import android.Manifest;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +12,6 @@ import android.view.View;
 
 import java.io.File;
 
-import cn.adair.itooler.R;
-import cn.adair.itooler.notice.NoticeUtil;
 import cn.adair.itooler.statusbar.iStatusBar;
 import cn.adair.itooler.tool.iLogger;
 import cn.adair.itooler.tool.iToaster;
@@ -20,6 +20,8 @@ import cn.adair.itooler.update.DownloadManager;
 import cn.adair.itooler.update.OnDownloadListener;
 import cn.adair.itooler.update.UpdateConfiguration;
 import cn.adair.itooler.util.iFileUtil;
+import cn.adair.itooler.util.iNoticeUtil;
+import cn.adair.itooler.util.iPermissionUtil;
 
 
 public class MainActivity extends AppCompatActivity implements OnDownloadListener {
@@ -78,14 +80,40 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
         findViewById(R.id.show).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setClass(MainActivity.this, TestActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// 关键的一步，设置启动模式
+                Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                intent.putExtra("init", "Notice");
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                iNoticeUtil.INSTANCE.iNoticeShow(MainActivity.this, R.mipmap.ic_launcher, "消息标题aaaa", "消息内容", pi);
+
+
+//                NotificationUtil.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题111", "消息内容111", intent);
+//                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", intent);
 //                NoticeUtil.INSTANCE.showProgressNotification(MainActivity.this,R.mipmap.ic_launcher,"消息标题","消息内容",100,50);
 //                NoticeUtil.INSTANCE.showDoneNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", getPackageName(), new File(iFileUtil.INSTANCE.isFilePath("update")));
+            }
+        });
+
+        findViewById(R.id.permit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iPermissionUtil.INSTANCE.requestPermissions(MainActivity.this, 100, new String[]{
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, new iPermissionUtil.OnPermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        iLogger.INSTANCE.e("同意");
+                    }
+
+                    @Override
+                    public void onPermissionDenied() {
+                        iLogger.INSTANCE.e("拒绝");
+                    }
+                });
             }
         });
 

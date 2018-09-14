@@ -4,8 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/iTooler.iml" filepath="$PROJECT_DIR$/iTooler.iml" />
       <module fileurl="file://$PROJECT_DIR$/iTooler-Core/iTooler-Core.iml" filepath="$PROJECT_DIR$/iTooler-Core/iTooler-Core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/iTooler-Sample/iTooler-Sample.iml" filepath="$PROJECT_DIR$/iTooler-Sample/iTooler-Sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/iTooler-Util/iTooler-Util.iml" filepath="$PROJECT_DIR$/iTooler-Util/iTooler-Util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iTooler-app/iTooler-app.iml" filepath="$PROJECT_DIR$/iTooler-app/iTooler-app.iml" />
     </modules>
   </component>
 </project>
