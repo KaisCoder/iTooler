@@ -7,8 +7,9 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 5
-        versionName "0.5"
+        versionCode 1
+        versionName "1.0"
+
     }
 
     buildTypes {
@@ -17,6 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {

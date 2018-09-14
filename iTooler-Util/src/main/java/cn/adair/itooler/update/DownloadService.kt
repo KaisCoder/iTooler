@@ -78,7 +78,7 @@ class DownloadService : Service(), OnDownloadListener {
         intent.addCategory(Intent.CATEGORY_DEFAULT)
         val uri: Uri
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(this.getApplicationContext(), packageName + ".fileprovider", apk)
+            uri = FileProvider.getUriForFile(this.getApplicationContext(), packageName + ".FileProvider", apk)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         } else {
             uri = Uri.fromFile(apk)

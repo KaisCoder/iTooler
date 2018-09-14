@@ -12,7 +12,7 @@ import android.view.View;
 
 import java.io.File;
 
-import cn.adair.itooler.statusbar.iStatusBar;
+import cn.adair.itooler.util.iStatusBarUtil;
 import cn.adair.itooler.tool.iLogger;
 import cn.adair.itooler.tool.iToaster;
 import cn.adair.itooler.tool.iUuider;
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
 
         setContentView(R.layout.activity_main);
         mToolbar = findViewById(R.id.toolbar);
-        iStatusBar.INSTANCE.darkMode(this);
-        iStatusBar.INSTANCE.setPaddingSmart(this, mToolbar);
+        iStatusBarUtil.INSTANCE.darkMode(this);
+        iStatusBarUtil.INSTANCE.setPaddingSmart(this, mToolbar);
 
         findViewById(R.id.toast).setOnClickListener(new View.OnClickListener() {
             @Override

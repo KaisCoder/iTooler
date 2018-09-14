@@ -1,4 +1,4 @@
-package cn.adair.itooler.statusbar
+package cn.adair.itooler.util
 
 import android.annotation.TargetApi
 import android.app.Activity
@@ -21,7 +21,7 @@ import java.util.regex.Pattern
  * Created by Administrator on 2018/5/14/014.
  * slight negligence may lead to great disaster~
  */
-object iStatusBar {
+object iStatusBarUtil {
 
     private var DEFAULT_COLOR = 0
     private var DEFAULT_ALPHA = 0f//Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 0.2f : 0.3f;

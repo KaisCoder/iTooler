@@ -65,9 +65,9 @@ object iPermissionUtil {
 
     interface OnPermissionListener {
 
-        abstract fun onPermissionGranted()
+        fun onPermissionGranted()
 
-        abstract fun onPermissionDenied()
+        fun onPermissionDenied()
 
     }
 

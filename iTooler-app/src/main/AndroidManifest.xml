@@ -27,16 +27,15 @@
             android:name=".TestActivity"
             android:taskAffinity="" />
 
-        <!--fileProvider-->
+        <!--FileProvider-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="${applicationId}.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <!--元数据-->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_path" />
+                android:resource="@xml/file_route" />
         </provider>
 
     </application>

@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "0.5"
 
     }
 
@@ -22,4 +22,5 @@ android {
 
 dependencies {
     api project(':iTooler-Util')
+    api project(':iTooler-Update')
 }
