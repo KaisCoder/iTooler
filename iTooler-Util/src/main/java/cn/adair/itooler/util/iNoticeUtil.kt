@@ -18,7 +18,12 @@ import cn.adair.itooler.tool.iLogger
  */
 object iNoticeUtil {
 
-    var iChannelId: String = "default"; //  将通知分类
+    // 通知id
+    var iNoticeId: Int = 1001;
+    //  通知分类
+    var iChannelId: String = "default";
+    var iChannelName: String = "默认名称";
+
 
     /**
      * 构建一个消息通知
@@ -32,7 +37,7 @@ object iNoticeUtil {
                 .setContentText(content).setAutoCancel(true)  // 点击是否可取消
                 .setPriority(NotificationCompat.PRIORITY_MAX) // 设置优先级
                 .setWhen(System.currentTimeMillis())
-                .setDefaults(Notification.DEFAULT_SOUND)
+                .setDefaults(Notification.DEFAULT_ALL)
                 .setOngoing(true)
     }
 
@@ -44,7 +49,7 @@ object iNoticeUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         }
         val builder = iNoticeBuilder(context, icon, title, content)
-        manager.notify(100, builder.build())
+        manager.notify(iNoticeId, builder.build())
     }
 
 
@@ -59,7 +64,7 @@ object iNoticeUtil {
         }
         val builder = iNoticeBuilder(context, icon, title, content)
         builder.setContentIntent(intent)
-        manager.notify(100, builder.build())
+        manager.notify(iNoticeId, builder.build())
     }
 
     /**
@@ -68,7 +73,7 @@ object iNoticeUtil {
     @RequiresApi(Build.VERSION_CODES.O)
     fun afterO(manager: NotificationManager) {
         iLogger.e("---------->")
-        var channel = NotificationChannel(iChannelId, "版本更新", NotificationManager.IMPORTANCE_LOW);
+        var channel = NotificationChannel(iChannelId, iChannelName, NotificationManager.IMPORTANCE_LOW);
         channel.enableLights(true)
         channel.setShowBadge(true)
         manager.createNotificationChannel(channel)

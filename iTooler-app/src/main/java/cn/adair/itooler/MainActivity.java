@@ -12,16 +12,17 @@ import android.view.View;
 
 import java.io.File;
 
-import cn.adair.itooler.util.iStatusBarUtil;
 import cn.adair.itooler.tool.iLogger;
 import cn.adair.itooler.tool.iToaster;
 import cn.adair.itooler.tool.iUuider;
 import cn.adair.itooler.update.DownloadManager;
 import cn.adair.itooler.update.OnDownloadListener;
+import cn.adair.itooler.update.UpdateConfig;
 import cn.adair.itooler.update.UpdateConfiguration;
 import cn.adair.itooler.util.iFileUtil;
 import cn.adair.itooler.util.iNoticeUtil;
 import cn.adair.itooler.util.iPermissionUtil;
+import cn.adair.itooler.util.iStatusBarUtil;
 
 
 public class MainActivity extends AppCompatActivity implements OnDownloadListener {
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                     @Override
                     public void onPermissionDenied() {
                         iLogger.INSTANCE.e("拒绝");
+                        iPermissionUtil.INSTANCE.showTipsDialog(MainActivity.this);
                     }
                 });
             }
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
     }
 
     private void startUpdate3() {
+
         /*
          * 整个库允许配置的内容
          * 非必选
