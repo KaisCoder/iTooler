@@ -65,7 +65,7 @@ class DownloadService : Service(), OnDownloadListener {
         val curr = (progress / max.toDouble() * 100.0).toInt()
         if (curr != lastProgress) {
             lastProgress = curr
-            NoticeUtil.showProgressNotification(this, smallIcon, "医道", "正在下载$lastProgress%", max, progress)
+            NoticeUtil.showProgressNotification(this, smallIcon, "apk下载", "正在下载$lastProgress%", max, progress)
         }
     }
 
