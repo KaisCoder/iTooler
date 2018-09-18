@@ -12,15 +12,15 @@ import android.view.View;
 
 import java.io.File;
 
+import cn.adair.itooler.notice.iNoticeConfig;
+import cn.adair.itooler.notice.iNoticeUtil;
 import cn.adair.itooler.tool.iLogger;
 import cn.adair.itooler.tool.iToaster;
 import cn.adair.itooler.tool.iUuider;
 import cn.adair.itooler.update.DownloadManager;
 import cn.adair.itooler.update.OnDownloadListener;
-import cn.adair.itooler.update.UpdateConfig;
 import cn.adair.itooler.update.UpdateConfiguration;
 import cn.adair.itooler.util.iFileUtil;
-import cn.adair.itooler.util.iNoticeUtil;
 import cn.adair.itooler.util.iPermissionUtil;
 import cn.adair.itooler.util.iStatusBarUtil;
 
@@ -86,9 +86,18 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                iNoticeUtil.INSTANCE.iNoticeShow(MainActivity.this, R.mipmap.ic_launcher, "消息标题aaaa", "消息内容", pi);
+
+                iNoticeConfig iConfig = new iNoticeConfig();
+                iConfig.setINoticeId(1001);
+                iConfig.setIChannelId("notice");
+                iConfig.setIChannelName("通知");
+                iConfig.setINoticeTitle("通知标题");
+                iConfig.setINoticeContent("通知内容");
+
+                iNoticeUtil.INSTANCE._SetConfig(iConfig).iNoticeWithIntentShow(MainActivity.this, R.mipmap.ic_launcher, pi);
 
 
+//                iNoticeUtil.INSTANCE.iNoticeShow(MainActivity.this, R.mipmap.ic_launcher, "消息标题aaaa", "消息内容", pi);
 //                NotificationUtil.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题111", "消息内容111", intent);
 //                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", intent);
 //                NoticeUtil.INSTANCE.showProgressNotification(MainActivity.this,R.mipmap.ic_launcher,"消息标题","消息内容",100,50);

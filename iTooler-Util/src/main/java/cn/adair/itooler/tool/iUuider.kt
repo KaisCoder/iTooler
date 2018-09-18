@@ -18,6 +18,7 @@ class iUuider {
     private var PREFS_FILE: String = "device_id.xml"
     private var PREFS_DEVICE_ID: String = "device_id"
 
+    @SuppressLint("HardwareIds")
     constructor(context: Context) {
         synchronized(iUuider::class.java) {
             val mSP: SharedPreferences = context.getSharedPreferences(PREFS_FILE, 0)
