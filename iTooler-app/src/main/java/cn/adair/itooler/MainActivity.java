@@ -10,22 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import java.io.File;
-
 import cn.adair.itooler.notice.iNoticeConfig;
 import cn.adair.itooler.notice.iNoticeUtil;
+import cn.adair.itooler.permit.iPermitUtil;
 import cn.adair.itooler.tool.iLogger;
 import cn.adair.itooler.tool.iToaster;
 import cn.adair.itooler.tool.iUuider;
-import cn.adair.itooler.update.DownloadManager;
-import cn.adair.itooler.update.OnDownloadListener;
-import cn.adair.itooler.update.UpdateConfiguration;
+import cn.adair.itooler.update.iUpdateManager;
 import cn.adair.itooler.util.iFileUtil;
-import cn.adair.itooler.util.iPermissionUtil;
 import cn.adair.itooler.util.iStatusBarUtil;
 
 
-public class MainActivity extends AppCompatActivity implements OnDownloadListener {
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
@@ -66,13 +62,17 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                         .setPositiveButton("升级", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                DownloadManager manager = DownloadManager.Companion.getInstance(MainActivity.this);
-                                manager.setSmallIcon(R.mipmap.ic_launcher);
-                                manager.setApkName("YiDao.apk");
-                                manager.setAuthorities(getPackageName());
-                                manager.setDownloadPath(iFileUtil.INSTANCE.isFilePath("update"));
-                                manager.setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk");
+                                iUpdateManager manager = iUpdateManager.Companion._Instance(MainActivity.this);
+                                manager.setINoticeId(1001);
+                                manager.setINoticeIcon(R.mipmap.ic_launcher);
+                                manager.setINoticeTitle("iTooler 下载通知");
+                                manager.setINoticeContent("iTooler 下载通知内容");
+                                manager.setIUpdateName("YiDao.apk");
+                                manager.setIUpdateUri("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk");
+                                manager.setIUpdatePath(iFileUtil.INSTANCE.isFilePath("update"));
                                 manager.download();
+
+
                             }
                         }).create().show();
             }
@@ -96,24 +96,18 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
 
                 iNoticeUtil.INSTANCE._SetConfig(iConfig).iNoticeWithIntentShow(MainActivity.this, R.mipmap.ic_launcher, pi);
 
-
-//                iNoticeUtil.INSTANCE.iNoticeShow(MainActivity.this, R.mipmap.ic_launcher, "消息标题aaaa", "消息内容", pi);
-//                NotificationUtil.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题111", "消息内容111", intent);
-//                NoticeUtil.INSTANCE.showNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", intent);
-//                NoticeUtil.INSTANCE.showProgressNotification(MainActivity.this,R.mipmap.ic_launcher,"消息标题","消息内容",100,50);
-//                NoticeUtil.INSTANCE.showDoneNotification(MainActivity.this, R.mipmap.ic_launcher, "消息标题", "消息内容", getPackageName(), new File(iFileUtil.INSTANCE.isFilePath("update")));
             }
         });
 
         findViewById(R.id.permit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iPermissionUtil.INSTANCE.requestPermissions(MainActivity.this, 100, new String[]{
+                iPermitUtil.INSTANCE.requestPermissions(MainActivity.this, 100, new String[]{
                         Manifest.permission.CAMERA,
                         Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
-                }, new iPermissionUtil.OnPermissionListener() {
+                }, new iPermitUtil.OnPermissionListener() {
                     @Override
                     public void onPermissionGranted() {
                         iLogger.INSTANCE.e("同意");
@@ -122,69 +116,11 @@ public class MainActivity extends AppCompatActivity implements OnDownloadListene
                     @Override
                     public void onPermissionDenied() {
                         iLogger.INSTANCE.e("拒绝");
-                        iPermissionUtil.INSTANCE.showTipsDialog(MainActivity.this);
+                        iPermitUtil.INSTANCE.showTipsDialog(MainActivity.this);
                     }
                 });
             }
         });
-
-    }
-
-    private void startUpdate3() {
-
-        /*
-         * 整个库允许配置的内容
-         * 非必选
-         */
-        UpdateConfiguration configuration = new UpdateConfiguration()
-                //输出错误日志
-                .setEnableLog(true)
-                //设置自定义的下载
-                //.setHttpManager()
-                //下载完成自动跳动安装页面
-                .setJumpInstallPage(true)
-                //支持断点下载
-                .setBreakpointDownload(true)
-                //设置是否显示通知栏进度
-                .setShowNotification(true)
-                //设置强制更新
-                .setForcedUpgrade(false)
-                //设置下载过程的监听
-                .setOnDownloadListener(this);
-
-//        DownloadManager manager = DownloadManager.getInstance(this);
-//        manager.setApkName("YiDao.apk")
-//                .setApkUrl("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk")
-//                .setSmallIcon(R.mipmap.ic_launcher)
-//                .setShowNewerToast(true)
-//                .setConfiguration(configuration)
-//                .setDownloadPath(iFileUtil.INSTANCE.isFilePath("update"))
-//                .setApkVersionCode(2)
-//                .setApkVersionName("2.1.8")
-//                .setApkSize("20.4")
-//                .setAuthorities(getPackageName())
-//                .setApkDescription("1.支持断点下载\n2.支持Android N\n3.支持Android O\n4.支持自定义下载过程\n5.支持 设备>=Android M 动态权限的申请\n6.支持通知栏进度条展示(或者自定义显示进度)")
-//                .download();
-    }
-
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void downloading(int max, int progress) {
-
-    }
-
-    @Override
-    public void done(File apk) {
-
-    }
-
-    @Override
-    public void error(Exception e) {
 
     }
 

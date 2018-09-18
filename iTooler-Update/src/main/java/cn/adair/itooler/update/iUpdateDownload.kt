@@ -12,49 +12,44 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 /**
- * cn.adair.itooler_kotlin.update
- * Created by Administrator on 2018/7/24/024.
+ * cn.adair.itooler.update
+ * Created by Administrator on 2018/9/18/018.
  * slight negligence may lead to great disaster~
  */
-class HttpDownloadManager(context: Context, apkPath: String) : BaseHttpDownloadManager() {
+class iUpdateDownload(iCtx: Context, iPath: String) {
 
-    var context: Context
-    var apkPath: String
-    lateinit var apkUrl: String
-    lateinit var apkName: String
-    lateinit var aLoadListener: OnDownloadListener
+    var iPath: String
+    var iContext: Context
 
     init {
-        this.context = context
-        this.apkPath = apkPath
+        this.iPath = iPath
+        this.iContext = iCtx
     }
 
-    override fun download(apkUrl: String, apkName: String, listener: OnDownloadListener) {
-        this.apkUrl = apkUrl
-        this.apkName = apkName
-        this.aLoadListener = listener
-        val executor = ThreadPoolExecutor(1, 1, 0L, TimeUnit.SECONDS, LinkedBlockingQueue<Runnable>(), object : ThreadFactory {
-            override fun newThread(r: Runnable?): Thread? {
-                val thread = Thread(r)
-                thread.name = "app update thread"
-                return thread
-            }
+    lateinit var iUri: String
+    lateinit var iName: String
+    lateinit var iListener: OnUpdateListener
+
+    fun download(iUri: String, iName: String, iListener: OnUpdateListener) {
+        this.iUri = iUri
+        this.iName = iName
+        this.iListener = iListener
+        val executor = ThreadPoolExecutor(1, 1, 0L, TimeUnit.SECONDS, LinkedBlockingQueue<Runnable>(), ThreadFactory { r ->
+            val thread = Thread(r)
+            thread.name = "app update thread"
+            thread
         })
         executor.execute(runnable)
-
     }
 
-    private val runnable = Runnable {
-        //删除之前的安装包
-        //检查是否需要断点下载
-        fullDownload()
+    var runnable = Runnable {
+        _FullDownload()
     }
 
-
-    private fun fullDownload() {
-        aLoadListener.start()
+    fun _FullDownload() {
+        iListener.start()
         try {
-            val url = URL(apkUrl)
+            val url = URL(iUri)
             val con = url.openConnection() as HttpURLConnection
             con.readTimeout = 5000
             con.connectTimeout = 5000
@@ -65,30 +60,29 @@ class HttpDownloadManager(context: Context, apkPath: String) : BaseHttpDownloadM
                 //当前已下载完成的进度
                 var progress = 0
                 val buffer = ByteArray(1024 * 4)
-                val file = File(apkPath, apkName)
+                val file = File(iPath, iName)
                 val outputStream = FileOutputStream(file)
                 var len = 0
-//                ((len = is.read(buffer)) != -1)
                 while ((inputStream.read(buffer).apply { len = this }) != -1) {
                     //将获取到的流写入文件中
                     outputStream.write(buffer, 0, len)
                     progress += len
-                    aLoadListener.downloading(length, progress)
+                    iListener.downloading(length, progress)
                 }
                 //完成io操作,释放资源
                 outputStream.flush()
                 outputStream.close()
                 inputStream.close()
-                aLoadListener.done(file)
+                iListener.done(file)
             } else {
-                aLoadListener.error(SocketTimeoutException("连接超时！"))
+                iListener.error(SocketTimeoutException("连接超时！"))
             }
             con.disconnect()
         } catch (e: Exception) {
-            aLoadListener.error(e)
+            iListener.error(e)
             e.printStackTrace()
         }
-
     }
 
 }
+

@@ -1,4 +1,4 @@
-package cn.adair.itooler.util
+package cn.adair.itooler.permit
 
 import android.annotation.TargetApi
 import android.app.Activity
@@ -57,7 +57,7 @@ import java.util.*
  * Created by Administrator on 2018/9/14/014.
  * slight negligence may lead to great disaster~
  */
-object iPermissionUtil {
+object iPermitUtil {
 
     var mRequestCode = -1
 

@@ -3,7 +3,6 @@ package cn.adair.itooler.update
 import android.content.Context
 import android.content.Intent
 import cn.adair.itooler.util.PermissionUtil
-import cn.adair.itooler.util.iPermissionUtil
 
 /**
  * cn.adair.itooler_kotlin.update

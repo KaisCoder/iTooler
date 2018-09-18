@@ -32,10 +32,11 @@ class iUuider {
                 } else {
                     val TelephonyManager: TelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                     @SuppressLint("MissingPermission")
+                    @SuppressWarnings("deprecation")
                     val deviceId = TelephonyManager.deviceId
                     iUuid = if (deviceId != null) UUID.nameUUIDFromBytes(deviceId.toByteArray(charset("utf8"))) else UUID.randomUUID()
                 }
-                mSP.edit().putString(PREFS_DEVICE_ID, iUuid.toString()).commit()
+                mSP.edit().putString(PREFS_DEVICE_ID, iUuid.toString()).apply()
             }
         }
     }

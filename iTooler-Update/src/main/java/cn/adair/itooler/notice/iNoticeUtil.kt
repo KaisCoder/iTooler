@@ -8,6 +8,7 @@ import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 
 /**
@@ -46,12 +47,12 @@ object iNoticeUtil {
     /**
      * 展示通知
      */
-    fun iNoticeShow(context: Context, icon: Int, title: String, content: String) {
+    fun iNoticeShow(context: Context, icon: Int) {
         Log.d(TAG, "---->当前使用API版本号：" + Build.VERSION.SDK_INT)
-        var manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         }
-        val builder = iNoticeBuilder(context, icon, title, content)
+        val builder = iNoticeBuilder(context, icon, iConfig.iNoticeTitle, iConfig.iNoticeContent)
         manager.notify(iConfig.iNoticeId, builder.build())
     }
 
@@ -60,13 +61,29 @@ object iNoticeUtil {
      *
      */
     fun iNoticeWithIntentShow(context: Context, icon: Int, intent: PendingIntent) {
-        var manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         Log.d(TAG, "---->当前使用API版本号：" + Build.VERSION.SDK_INT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             afterO(manager)
         }
         val builder = iNoticeBuilder(context, icon, iConfig.iNoticeTitle, iConfig.iNoticeContent)
         builder.setContentIntent(intent)
+        manager.notify(iConfig.iNoticeId, builder.build())
+    }
+
+    /**
+     * 展示带进度条通知
+     * 进度条中的推送关闭声音震动和闪光
+     */
+    fun iNoticeWithProgressShow(context: Context, icon: Int, max: Int, progress: Int) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            afterO(manager)
+        }
+        val builder = iNoticeBuilder(context, icon, iConfig.iNoticeTitle, iConfig.iNoticeContent)
+                .setAutoCancel(false)
+                .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
+                .setProgress(max, progress, false)
         manager.notify(iConfig.iNoticeId, builder.build())
     }
 
@@ -79,6 +96,16 @@ object iNoticeUtil {
         channel.enableLights(true)
         channel.setShowBadge(true)
         manager.createNotificationChannel(channel)
+    }
+
+
+    /**
+     * 获取通知栏开关状态
+     * @return true |false
+     */
+    fun iNoticeIsEnable(context: Context): Boolean {
+        val noticeCompat = NotificationManagerCompat.from(context)
+        return noticeCompat.areNotificationsEnabled()
     }
 
 }

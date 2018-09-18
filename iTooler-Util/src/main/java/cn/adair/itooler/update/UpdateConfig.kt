@@ -20,7 +20,6 @@ class UpdateConfig {
     /**
      * 用户自定义的下载管理
      */
-    lateinit var downloadManager: BaseHttpDownloadManager
     /**
      * 是否需要支持断点下载 (默认是支持的)
      */
