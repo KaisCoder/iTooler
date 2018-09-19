@@ -80,9 +80,7 @@ object iPermitUtil {
                 mRequestCode = requestCode
                 context.requestPermissions(deniedPermissions.toTypedArray(), requestCode)
             } else {
-                if (mOnPermissionListener != null) {
-                    mOnPermissionListener.onPermissionGranted()
-                }
+                mOnPermissionListener.onPermissionGranted()
             }
         } else {
             throw RuntimeException("Context must be an Activity")
@@ -102,32 +100,6 @@ object iPermitUtil {
         return deniedPermissions
     }
 
-    /**
-     * 请求权限结果，对应Activity中onRequestPermissionsResult()方法。
-     */
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (mRequestCode != -1 && requestCode == mRequestCode) {
-            if (mOnPermissionListener != null) {
-                if (verifyPermissions(grantResults)) {
-                    mOnPermissionListener.onPermissionGranted()
-                } else {
-                    mOnPermissionListener.onPermissionDenied()
-                }
-            }
-        }
-    }
-
-    /**
-     * 验证所有权限是否都已经授权
-     */
-    private fun verifyPermissions(grantResults: IntArray): Boolean {
-        for (grantResult in grantResults) {
-            if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                return false
-            }
-        }
-        return true
-    }
 
     /**
      * 显示提示对话框
