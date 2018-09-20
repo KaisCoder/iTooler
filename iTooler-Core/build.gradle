@@ -9,6 +9,8 @@ android {
         versionCode 6
         versionName "1.0"
 
+        multiDexEnabled true
+
     }
 
     buildTypes {
@@ -21,6 +23,6 @@ android {
 }
 
 dependencies {
-    api project(':iTooler-Util')
     api project(':iTooler-Update')
+    api project(':iTooler-Util')
 }
