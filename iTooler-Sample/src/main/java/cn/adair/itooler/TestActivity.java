@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import cn.adair.itooler.tool.iLogger;
+import cn.adair.itooler.tooler.iLogger;
 
 
 public class TestActivity extends AppCompatActivity {

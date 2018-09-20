@@ -1,4 +1,4 @@
-package cn.adair.itooler.util
+package cn.adair.itooler.tooler
 
 import android.os.Environment
 import cn.adair.itooler.iTooler
@@ -10,7 +10,7 @@ import java.io.File
  * Created by Administrator on 2018/6/22/022.
  * slight negligence may lead to great disaster~
  */
-object iFileUtil {
+object iFileer {
 
     private val isSDCardAvailable: Boolean = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
 

@@ -2,7 +2,7 @@ package cn.adair.itooler
 
 import android.app.Application
 import android.content.Context
-import cn.adair.itooler.tool.iUuider
+import cn.adair.itooler.tooler.iUuider
 
 /**
  * cn.adair.itool_kotlin

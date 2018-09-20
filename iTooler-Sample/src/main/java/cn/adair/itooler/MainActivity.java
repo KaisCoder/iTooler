@@ -13,12 +13,11 @@ import android.view.View;
 import cn.adair.itooler.notice.iNoticeConfig;
 import cn.adair.itooler.notice.iNoticeUtil;
 import cn.adair.itooler.permit.iPermitUtil;
-import cn.adair.itooler.tool.iLogger;
-import cn.adair.itooler.tool.iToaster;
-import cn.adair.itooler.tool.iUuider;
+import cn.adair.itooler.tooler.iFileer;
+import cn.adair.itooler.tooler.iLogger;
+import cn.adair.itooler.tooler.iToaster;
+import cn.adair.itooler.tooler.iUuider;
 import cn.adair.itooler.update.iUpdateManager;
-import cn.adair.itooler.util.iFileUtil;
-import cn.adair.itooler.util.iStatusBarUtil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         mToolbar = findViewById(R.id.toolbar);
-        iStatusBarUtil.INSTANCE.darkMode(this);
-        iStatusBarUtil.INSTANCE.setPaddingSmart(this, mToolbar);
+        iStatusBar.INSTANCE.darkMode(this);
+        iStatusBar.INSTANCE.setPaddingSmart(this, mToolbar);
 
         findViewById(R.id.toast).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 iLogger.INSTANCE.e();
                 iLogger.INSTANCE.e(iUuider.Companion.deviceUuid().toString());
 
-                iLogger.INSTANCE.e(iFileUtil.INSTANCE.isFilePath("images"));
+                iLogger.INSTANCE.e(iFileer.INSTANCE.isFilePath("images"));
 
             }
         });
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                 manager.setINoticeContent("iTooler 下载通知内容");
                                 manager.setIUpdateName("YiDao.apk");
                                 manager.setIUpdateUri("http://files.yidao.pro/admin/20180717/8b2649dcc2bc0ef3d7f1ecb4a1e8efae.apk");
-                                manager.setIUpdatePath(iFileUtil.INSTANCE.isFilePath("update"));
+                                manager.setIUpdatePath(iFileer.INSTANCE.isFilePath("update"));
                                 manager.download();
 
 
