@@ -1,5 +1,5 @@
-# iTooler-kotlin
-## iTooler-kotlin 引用
+# iTooler
+## iTooler 引用
 
 - 加入JitPack仓库依赖。
 ```
