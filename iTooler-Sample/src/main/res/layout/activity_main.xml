@@ -52,4 +52,17 @@
         android:text="Show" />
 
 
+    <cn.adair.itooler.roller.wheel.iWheelView
+        android:id="@+id/wheelview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="#f0f4c3"
+        app:iDividerColor="#699f38"
+        app:iTextColorNormal="#00796b"
+        app:iTextColorSelect="#004d40"
+        app:isShowDivider="true"
+        app:iTextSize="24sp" />
+
+
 </LinearLayout>
