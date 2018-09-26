@@ -52,17 +52,52 @@
         android:text="Show" />
 
 
-    <cn.adair.itooler.roller.wheel.iWheelView
-        android:id="@+id/wheelview"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="#f0f4c3"
-        app:iDividerColor="#699f38"
-        app:iTextColorNormal="#00796b"
-        app:iTextColorSelect="#004d40"
-        app:isShowDivider="true"
-        app:iTextSize="24sp" />
+        android:orientation="horizontal">
+
+        <cn.adair.itooler.roller.picker.YearWheelView
+            android:id="@+id/wv_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:wv_endYear="2100"
+            app:wv_selectedYear="2000"
+            app:wv_startYear="1970"
+            app:wv_textSize="24sp" />
+
+        <cn.adair.itooler.roller.picker.MonthWheelView
+            android:id="@+id/wv_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:wv_selectedMonth="10"
+            app:wv_textSize="24sp" />
+
+        <cn.adair.itooler.roller.picker.DayWheelView
+            android:id="@+id/wv_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:wv_month="10"
+            app:wv_selectedDay="21"
+            app:wv_textSize="24sp"
+            app:wv_year="2000" />
+
+    </LinearLayout>
+
+    <cn.adair.itooler.roller.picker.DatePickerView
+        android:id="@+id/date_Picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <cn.adair.itooler.roller.picker.OptionsPickerView
+        android:id="@+id/opv_three_linkage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#DCDCDC" />
 
 
 </LinearLayout>
