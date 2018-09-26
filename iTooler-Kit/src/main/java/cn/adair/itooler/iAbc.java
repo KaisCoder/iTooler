@@ -7,7 +7,7 @@ package cn.adair.itooler;
  */
 public class iAbc {
 
-    public String aVoid() {
+    public static String aVoid() {
         return "iAbc.aVoid()";
     }
 

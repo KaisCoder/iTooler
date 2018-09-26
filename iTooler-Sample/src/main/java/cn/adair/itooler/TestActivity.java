@@ -16,5 +16,5 @@ public class TestActivity extends AppCompatActivity {
 
         String init = getIntent().getStringExtra("init");
         iLogger.INSTANCE.e("---->" + init);
-    }
+}
 }

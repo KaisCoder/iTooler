@@ -37,5 +37,5 @@ dependencies {
     implementation "com.google.code.gson:gson:2.8.4"
 
     implementation project(':iTooler-Core')
-//    implementation 'com.github.adair-kit:iTooler:1.2'
+//    implementation 'com.github.adair-kit:iTooler:1.3'
 }

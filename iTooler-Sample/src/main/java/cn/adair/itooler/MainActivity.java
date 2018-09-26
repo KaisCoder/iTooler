@@ -192,6 +192,9 @@ public class MainActivity extends AppCompatActivity {
                 iLogger.INSTANCE.e("onOptionsSelected: three Linkage op1Pos=" + opt1Pos + ",op1Data=" + opt1Data.getName() + ",op2Pos=" + opt2Pos + ",op2Data=" + opt2Data.getName() + ",op3Pos=" + opt3Pos + ",op3Data=" + opt3Data.getName());
             }
         });
+
+        iLogger.INSTANCE.e(iAbc.aVoid());
+
     }
 
 }
