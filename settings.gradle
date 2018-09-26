@@ -1,1 +1,1 @@
-include ':iTooler-Sample', ':iTooler-Core', ':iTooler-Kit'
+include ':iTooler-Sample', ':iTooler-Core'
