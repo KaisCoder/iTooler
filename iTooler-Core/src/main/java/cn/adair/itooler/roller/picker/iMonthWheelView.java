@@ -19,20 +19,20 @@ import cn.adair.itooler.roller.wheel.iWheelView;
  * @version v1.0.0
  * @since 2018/8/20.
  */
-public class MonthWheelView extends iWheelView<Integer> {
+public class iMonthWheelView extends iWheelView<Integer> {
 
-    public MonthWheelView(Context context) {
+    public iMonthWheelView(Context context) {
         this(context, null);
     }
 
-    public MonthWheelView(Context context, @Nullable AttributeSet attrs) {
+    public iMonthWheelView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MonthWheelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public iMonthWheelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.MonthWheelView);
-        int selectedMonth = typedArray.getInt(R.styleable.MonthWheelView_wv_selectedMonth, Calendar.getInstance().get(Calendar.MONTH) + 1);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.iWheel_Month);
+        int selectedMonth = typedArray.getInt(R.styleable.iWheel_Month_iSelectMonth, Calendar.getInstance().get(Calendar.MONTH) + 1);
         typedArray.recycle();
         initData();
         setSelectedMonth(selectedMonth);
@@ -103,6 +103,6 @@ public class MonthWheelView extends iWheelView<Integer> {
 
     @Override
     public void setData(List<Integer> dataList) {
-        throw new UnsupportedOperationException("You can not invoke setData method in " + MonthWheelView.class.getSimpleName() + ".");
+        throw new UnsupportedOperationException("You can not invoke setData method in " + iMonthWheelView.class.getSimpleName() + ".");
     }
 }

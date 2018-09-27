@@ -20,28 +20,29 @@ import cn.adair.itooler.roller.wheel.iWheelView;
  * @version v1.0.0
  * @since 2018/8/20.
  */
-public class DayWheelView extends iWheelView<Integer> {
+public class iDayWheelView extends iWheelView<Integer> {
+
     private static final SparseArray<List<Integer>> DAYS = new SparseArray<>(1);
 
     private int mYear;
     private int mMonth;
     private Calendar mCalendar;
 
-    public DayWheelView(Context context) {
+    public iDayWheelView(Context context) {
         this(context, null);
     }
 
-    public DayWheelView(Context context, @Nullable AttributeSet attrs) {
+    public iDayWheelView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DayWheelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public iDayWheelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mCalendar = Calendar.getInstance();
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DayWheelView);
-        mYear = typedArray.getInt(R.styleable.DayWheelView_wv_year, mCalendar.get(Calendar.YEAR));
-        mMonth = typedArray.getInt(R.styleable.DayWheelView_wv_month, mCalendar.get(Calendar.MONTH) + 1);
-        int selectedDay = typedArray.getInt(R.styleable.DayWheelView_wv_selectedDay, mCalendar.get(Calendar.DATE));
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.iWheel_Day);
+        mYear = typedArray.getInt(R.styleable.iWheel_Day_iYear, mCalendar.get(Calendar.YEAR));
+        mMonth = typedArray.getInt(R.styleable.iWheel_Day_iMonth, mCalendar.get(Calendar.MONTH) + 1);
+        int selectedDay = typedArray.getInt(R.styleable.iWheel_Day_iSelectDay, mCalendar.get(Calendar.DATE));
         typedArray.recycle();
         updateDay();
         setSelectedDay(selectedDay);
@@ -173,6 +174,6 @@ public class DayWheelView extends iWheelView<Integer> {
 
     @Override
     public void setData(List<Integer> dataList) {
-        throw new UnsupportedOperationException("You can not invoke setData method in " + DayWheelView.class.getSimpleName() + ".");
+        throw new UnsupportedOperationException("You can not invoke setData method in " + iDayWheelView.class.getSimpleName() + ".");
     }
 }

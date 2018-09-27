@@ -19,25 +19,25 @@ import cn.adair.itooler.roller.wheel.iWheelView;
  * @version v1.0.0
  * @since 2018/8/20.
  */
-public class YearWheelView extends iWheelView<Integer> {
+public class iYearWheelView extends iWheelView<Integer> {
 
     private int mStartYear;
     private int mEndYear;
 
-    public YearWheelView(Context context) {
+    public iYearWheelView(Context context) {
         this(context, null);
     }
 
-    public YearWheelView(Context context, @Nullable AttributeSet attrs) {
+    public iYearWheelView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public YearWheelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public iYearWheelView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.YearWheelView);
-        mStartYear = typedArray.getInt(R.styleable.YearWheelView_wv_startYear, 1900);
-        mEndYear = typedArray.getInt(R.styleable.YearWheelView_wv_endYear, 2100);
-        int selectedYear = typedArray.getInt(R.styleable.YearWheelView_wv_selectedYear, Calendar.getInstance().get(Calendar.YEAR));
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.iWheel_Year);
+        mStartYear = typedArray.getInt(R.styleable.iWheel_Year_iStartYear, 1900);
+        mEndYear = typedArray.getInt(R.styleable.iWheel_Year_iEndYear, 2100);
+        int selectedYear = typedArray.getInt(R.styleable.iWheel_Year_iSelectYear, Calendar.getInstance().get(Calendar.YEAR));
         typedArray.recycle();
         updateYear();
         setSelectedYear(selectedYear);
@@ -121,6 +121,6 @@ public class YearWheelView extends iWheelView<Integer> {
 
     @Override
     public void setData(List<Integer> dataList) {
-        throw new UnsupportedOperationException("You can not invoke setData method in " + YearWheelView.class.getSimpleName() + ".");
+        throw new UnsupportedOperationException("You can not invoke setData method in " + iYearWheelView.class.getSimpleName() + ".");
     }
 }

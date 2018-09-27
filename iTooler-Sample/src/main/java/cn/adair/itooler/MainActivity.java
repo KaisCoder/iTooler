@@ -19,10 +19,10 @@ import cn.adair.itooler.notice.iNoticeConfig;
 import cn.adair.itooler.notice.iNoticeUtil;
 import cn.adair.itooler.permit.iPermitUtil;
 import cn.adair.itooler.roller.picker.DatePickerView;
-import cn.adair.itooler.roller.picker.DayWheelView;
-import cn.adair.itooler.roller.picker.MonthWheelView;
 import cn.adair.itooler.roller.picker.OptionsPickerView;
-import cn.adair.itooler.roller.picker.YearWheelView;
+import cn.adair.itooler.roller.picker.iDayWheelView;
+import cn.adair.itooler.roller.picker.iMonthWheelView;
+import cn.adair.itooler.roller.picker.iYearWheelView;
 import cn.adair.itooler.roller.wheel.OnItemSelectedListener;
 import cn.adair.itooler.roller.wheel.iWheelView;
 import cn.adair.itooler.tooler.iFileer;
@@ -133,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        YearWheelView yearWv = findViewById(R.id.wv_year);
-        MonthWheelView monthWv = findViewById(R.id.wv_month);
-        final DayWheelView dayWv = findViewById(R.id.wv_day);
+        iYearWheelView yearWv = findViewById(R.id.wv_year);
+        iMonthWheelView monthWv = findViewById(R.id.wv_month);
+        final iDayWheelView dayWv = findViewById(R.id.wv_day);
         yearWv.setOnItemSelectedListener(new OnItemSelectedListener<Integer>() {
             @Override
             public void onItemSelected(iWheelView<Integer> wheelView, Integer data, int position) {
@@ -157,15 +157,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         DatePickerView mPickerView = findViewById(R.id.date_Picker);
-        mPickerView.setTextSize(24, true);
+        mPickerView.setTextSize(20, true);
         mPickerView.setShowLabel(true);
         mPickerView.getYearWv().setTextBoundaryMargin(16, true);
         mPickerView.getMonthWv().setTextBoundaryMargin(16, true);
         mPickerView.getDayWv().setTextBoundaryMargin(16, true);
         mPickerView.setDrawSelectedRect(true);
-        mPickerView.setSelectedRectColor(Color.parseColor("#F5F5F5"));
+        mPickerView.setLayoutMasklayerColor(Color.parseColor("#FFF2F2F2"));
 
 
         List<CityEntity> p3List = new ArrayList<>(1);
@@ -192,9 +191,6 @@ public class MainActivity extends AppCompatActivity {
                 iLogger.INSTANCE.e("onOptionsSelected: three Linkage op1Pos=" + opt1Pos + ",op1Data=" + opt1Data.getName() + ",op2Pos=" + opt2Pos + ",op2Data=" + opt2Data.getName() + ",op3Pos=" + opt3Pos + ",op3Data=" + opt3Data.getName());
             }
         });
-
-        iLogger.INSTANCE.e(iAbc.aVoid());
-
     }
 
 }

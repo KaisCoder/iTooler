@@ -57,33 +57,33 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <cn.adair.itooler.roller.picker.YearWheelView
+        <cn.adair.itooler.roller.picker.iYearWheelView
             android:id="@+id/wv_year"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:wv_endYear="2100"
-            app:wv_selectedYear="2000"
-            app:wv_startYear="1970"
-            app:wv_textSize="24sp" />
+            app:iEndYear="2100"
+            app:iSelectYear="2000"
+            app:iStartYear="1970"
+            app:iTextSize="24sp" />
 
-        <cn.adair.itooler.roller.picker.MonthWheelView
+        <cn.adair.itooler.roller.picker.iMonthWheelView
             android:id="@+id/wv_month"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:wv_selectedMonth="10"
-            app:wv_textSize="24sp" />
+            app:iSelectMonth="10"
+            app:iTextSize="24sp" />
 
-        <cn.adair.itooler.roller.picker.DayWheelView
+        <cn.adair.itooler.roller.picker.iDayWheelView
             android:id="@+id/wv_day"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:wv_month="10"
-            app:wv_selectedDay="21"
-            app:wv_textSize="24sp"
-            app:wv_year="2000" />
+            app:iMonth="10"
+            app:iYear="2000"
+            app:iSelectDay="21"
+            app:iTextSize="24sp" />
 
     </LinearLayout>
 
@@ -98,6 +98,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#DCDCDC" />
-
 
 </LinearLayout>

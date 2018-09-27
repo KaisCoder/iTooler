@@ -44,10 +44,11 @@ public class iWheelView<T> extends View implements Runnable {
 
     private static final float DEFAULT_LINE_SPACING = iRollerUtil.dp2px(2f);
     private static final float DEFAULT_TEXT_SIZE = iRollerUtil.sp2px(15f);
-    private static final float DEFAULT_TEXT_BOUNDARY_MARGIN = iRollerUtil.dp2px(2);
+    private static final float DEFAULT_TEXT_MARGIN = iRollerUtil.dp2px(2);
+
     private static final float DEFAULT_DIVIDER_HEIGHT = iRollerUtil.dp2px(1);
-    private static final int DEFAULT_NORMAL_TEXT_COLOR = Color.DKGRAY;
-    private static final int DEFAULT_SELECTED_TEXT_COLOR = Color.BLACK;
+    private static final int DEFAULT_TEXT_COLOR_NORMAL = Color.DKGRAY;
+    private static final int DEFAULT_TEXT_COLOR_SELECT = Color.BLACK;
     private static final int DEFAULT_VISIBLE_ITEM = 5;
     private static final int DEFAULT_SCROLL_DURATION = 250;
     private static final long DEFAULT_CLICK_CONFIRM = 120;
@@ -55,26 +56,12 @@ public class iWheelView<T> extends View implements Runnable {
     //默认折射比值，通过字体大小来实现折射视觉差
     private static final float DEFAULT_REFRACT_RATIO = 0.9f;
 
-    //文字对齐方式
-//    public static final int TEXT_ALIGN_LEFT = 0;
-//    public static final int TEXT_ALIGN_CENTER = 1;
-//    public static final int TEXT_ALIGN_RIGHT = 2;
-
     //滚动状态
     public static final int SCROLL_STATE_IDLE = 0;
     public static final int SCROLL_STATE_DRAGGING = 1;
     public static final int SCROLL_STATE_SCROLLING = 2;
 
-    //弯曲效果对齐方式
-//    public static final int CURVED_ARC_DIRECTION_LEFT = 0;
-//    public static final int CURVED_ARC_DIRECTION_CENTER = 1;
-//    public static final int CURVED_ARC_DIRECTION_RIGHT = 2;
-
     public static final float DEFAULT_CURVED_FACTOR = 0.75f;
-
-    //分割线填充类型
-//    public static final int DIVIDER_TYPE_FILL = 0;
-//    public static final int DIVIDER_TYPE_WRAP = 1;
 
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     //字体大小
@@ -97,17 +84,17 @@ public class iWheelView<T> extends View implements Runnable {
     //文字对齐方式
     @iRollerUtil.TextAlign
     private int mTextAlign;
-    //文字颜色
-    private int mTextColor;
+    //未选中文字颜色
+    private int mTextColorNormal;
     //选中item文字颜色
-    private int mSelectedItemTextColor;
+    private int mTextColorSelect;
 
     //是否显示分割线
     private boolean isShowDivider;
     //分割线的颜色
     private int mDividerColor;
     //分割线高度
-    private float mDividerSize;
+    private float mDividerHeight;
     //分割线填充类型
     @iRollerUtil.DividerType
     private int mDividerType;
@@ -120,13 +107,12 @@ public class iWheelView<T> extends View implements Runnable {
       ----------since version 1.0.1 ----------
      */
     //是否绘制选中区域
-    private boolean isDrawSelectedRect;
+    private boolean isDrawSelectRect;
     //选中区域颜色
-    private int mSelectedRectColor;
+    private int mSelectRectColor;
     /*
       ----------since version 1.0.1 ----------
      */
-
 
     //文字起始X
     private int mStartX;
@@ -145,11 +131,11 @@ public class iWheelView<T> extends View implements Runnable {
     //绘制区域
     private Rect mDrawRect;
     //字体外边距，目的是留有边距
-    private float mTextBoundaryMargin;
+    private float mTextMargin;
     //数据为Integer类型时，是否需要格式转换
-    private boolean isIntegerNeedFormat;
+    private boolean isIntNeedFormat;
     //数据为Integer类型时，转换格式，默认转换为两位数
-    private String mIntegerFormat;
+    private String mIntFormat;
 
     //3D效果
     private Camera mCamera;
@@ -228,47 +214,49 @@ public class iWheelView<T> extends View implements Runnable {
      */
     private void initAttrsAndDefault(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.WheelView);
-        mTextSize = typedArray.getDimension(R.styleable.WheelView_wv_textSize, DEFAULT_TEXT_SIZE);
-        isAutoFitTextSize = typedArray.getBoolean(R.styleable.WheelView_wv_autoFitTextSize, false);
-        mTextAlign = typedArray.getInt(R.styleable.WheelView_wv_textAlign, iRollerUtil.TEXT_ALIGN_CENTER);
-        mTextBoundaryMargin = typedArray.getDimension(R.styleable.WheelView_wv_textBoundaryMargin, DEFAULT_TEXT_BOUNDARY_MARGIN);
-        mTextColor = typedArray.getColor(R.styleable.WheelView_wv_normalItemTextColor, DEFAULT_NORMAL_TEXT_COLOR);
-        mSelectedItemTextColor = typedArray.getColor(R.styleable.WheelView_wv_selectedItemTextColor, DEFAULT_SELECTED_TEXT_COLOR);
-        mLineSpacing = typedArray.getDimension(R.styleable.WheelView_wv_lineSpacing, DEFAULT_LINE_SPACING);
-        isIntegerNeedFormat = typedArray.getBoolean(R.styleable.WheelView_wv_integerNeedFormat, false);
+        mTextSize = typedArray.getDimension(R.styleable.WheelView_iTextSize, DEFAULT_TEXT_SIZE);
+        isAutoFitTextSize = typedArray.getBoolean(R.styleable.WheelView_isAutoFitTextSize, false);
+        mTextAlign = typedArray.getInt(R.styleable.WheelView_iTextAlign, iRollerUtil.TEXT_ALIGN_CENTER);
+        mTextMargin = typedArray.getDimension(R.styleable.WheelView_iTextMargin, DEFAULT_TEXT_MARGIN);
+        mTextColorNormal = typedArray.getColor(R.styleable.WheelView_iTextColorNormal, DEFAULT_TEXT_COLOR_NORMAL);
+        mTextColorSelect = typedArray.getColor(R.styleable.WheelView_iTextColorSelect, DEFAULT_TEXT_COLOR_SELECT);
 
-        mIntegerFormat = typedArray.getString(R.styleable.WheelView_wv_integerFormat);
-        if (TextUtils.isEmpty(mIntegerFormat)) {
-            mIntegerFormat = DEFAULT_INTEGER_FORMAT;
+        mLineSpacing = typedArray.getDimension(R.styleable.WheelView_iLineSpacing, DEFAULT_LINE_SPACING);
+        isIntNeedFormat = typedArray.getBoolean(R.styleable.WheelView_isIntNeedFormat, false);
+
+        mIntFormat = typedArray.getString(R.styleable.WheelView_iIntFormat);
+        if (TextUtils.isEmpty(mIntFormat)) {
+            mIntFormat = DEFAULT_INTEGER_FORMAT;
         }
 
-        mVisibleItems = typedArray.getInt(R.styleable.WheelView_wv_visibleItems, DEFAULT_VISIBLE_ITEM);
+        mVisibleItems = typedArray.getInt(R.styleable.WheelView_iVisibleItems, DEFAULT_VISIBLE_ITEM);
         //跳转可见item为奇数
         mVisibleItems = adjustVisibleItems(mVisibleItems);
-        mSelectedItemPosition = typedArray.getInt(R.styleable.WheelView_wv_selectedItemPosition, 0);
+        mSelectedItemPosition = typedArray.getInt(R.styleable.WheelView_iSelectItemPosition, 0);
         //初始化滚动下标
         mCurrentScrollPosition = mSelectedItemPosition;
-        isCyclic = typedArray.getBoolean(R.styleable.WheelView_wv_cyclic, false);
+        isCyclic = typedArray.getBoolean(R.styleable.WheelView_isCyclic, false);
 
-        isShowDivider = typedArray.getBoolean(R.styleable.WheelView_wv_showDivider, false);
-        mDividerType = typedArray.getInt(R.styleable.WheelView_wv_dividerType, iRollerUtil.DIVIDER_TYPE_FILL);
-        mDividerSize = typedArray.getDimension(R.styleable.WheelView_wv_dividerHeight, DEFAULT_DIVIDER_HEIGHT);
-        mDividerColor = typedArray.getColor(R.styleable.WheelView_wv_dividerColor, DEFAULT_SELECTED_TEXT_COLOR);
-        mDividerPaddingForWrap = typedArray.getDimension(R.styleable.WheelView_wv_dividerPaddingForWrap, DEFAULT_TEXT_BOUNDARY_MARGIN);
+        isShowDivider = typedArray.getBoolean(R.styleable.WheelView_isShowDivider, false);
+        mDividerType = typedArray.getInt(R.styleable.WheelView_iDividerType, iRollerUtil.DIVIDER_TYPE_FILL);
+        mDividerColor = typedArray.getColor(R.styleable.WheelView_iDividerColor, DEFAULT_TEXT_COLOR_SELECT);
+        mDividerHeight = typedArray.getDimension(R.styleable.WheelView_iDividerHeight, DEFAULT_DIVIDER_HEIGHT);
+        mDividerPaddingForWrap = typedArray.getDimension(R.styleable.WheelView_iDividerPaddingForWrap, DEFAULT_TEXT_MARGIN);
 
-        isDrawSelectedRect = typedArray.getBoolean(R.styleable.WheelView_wv_drawSelectedRect, false);
-        mSelectedRectColor = typedArray.getColor(R.styleable.WheelView_wv_selectedRectColor, Color.TRANSPARENT);
-
-        isCurved = typedArray.getBoolean(R.styleable.WheelView_wv_curved, true);
-        mCurvedArcDirection = typedArray.getInt(R.styleable.WheelView_wv_curvedArcDirection, iRollerUtil.CURVED_ARC_DIRECTION_CENTER);
-        mCurvedArcDirectionFactor = typedArray.getFloat(R.styleable.WheelView_wv_curvedArcDirectionFactor, DEFAULT_CURVED_FACTOR);
+        isCurved = typedArray.getBoolean(R.styleable.WheelView_isCurved, true);
+        mCurvedArcDirection = typedArray.getInt(R.styleable.WheelView_iCurvedArcDirection, iRollerUtil.CURVED_ARC_DIRECTION_CENTER);
+        mCurvedArcDirectionFactor = typedArray.getFloat(R.styleable.WheelView_iCurvedArcDirectionFactor, DEFAULT_CURVED_FACTOR);
         //折射偏移默认值
-        mCurvedRefractRatio = typedArray.getFloat(R.styleable.WheelView_wv_curvedRefractRatio, DEFAULT_REFRACT_RATIO);
+        mCurvedRefractRatio = typedArray.getFloat(R.styleable.WheelView_iCurvedRefractRatio, DEFAULT_REFRACT_RATIO);
         if (mCurvedRefractRatio > 1f) {
             mCurvedRefractRatio = 1.0f;
         } else if (mCurvedRefractRatio < 0f) {
             mCurvedRefractRatio = DEFAULT_REFRACT_RATIO;
         }
+
+        isDrawSelectRect = typedArray.getBoolean(R.styleable.WheelView_isDrawSelectRect, false);
+        mSelectRectColor = typedArray.getColor(R.styleable.WheelView_iSelectRectColor, Color.TRANSPARENT);
+
         typedArray.recycle();
     }
 
@@ -361,7 +349,7 @@ public class iWheelView<T> extends View implements Runnable {
         } else {
             height = mItemHeight * mVisibleItems + getPaddingTop() + getPaddingBottom();
         }
-        int width = (int) (mMaxTextWidth + getPaddingLeft() + getPaddingRight() + mTextBoundaryMargin * 2);
+        int width = (int) (mMaxTextWidth + getPaddingLeft() + getPaddingRight() + mTextMargin * 2);
         if (isCurved) {
             int towardRange = (int) (Math.sin(Math.PI / 48) * height);
             width += towardRange;
@@ -394,10 +382,10 @@ public class iWheelView<T> extends View implements Runnable {
     private void calculateDrawStart() {
         switch (mTextAlign) {
             case iRollerUtil.TEXT_ALIGN_LEFT:
-                mStartX = (int) (getPaddingLeft() + mTextBoundaryMargin);
+                mStartX = (int) (getPaddingLeft() + mTextMargin);
                 break;
             case iRollerUtil.TEXT_ALIGN_RIGHT:
-                mStartX = (int) (getWidth() - getPaddingRight() - mTextBoundaryMargin);
+                mStartX = (int) (getWidth() - getPaddingRight() - mTextMargin);
                 break;
             case iRollerUtil.TEXT_ALIGN_CENTER:
             default:
@@ -466,8 +454,8 @@ public class iWheelView<T> extends View implements Runnable {
      * @param canvas 画布
      */
     private void drawSelectedRect(Canvas canvas) {
-        if (isDrawSelectedRect) {
-            mPaint.setColor(mSelectedRectColor);
+        if (isDrawSelectRect) {
+            mPaint.setColor(mSelectRectColor);
             canvas.drawRect(mClipLeft, mSelectedItemTopLimit, mClipRight, mSelectedItemBottomLimit, mPaint);
         }
     }
@@ -483,7 +471,7 @@ public class iWheelView<T> extends View implements Runnable {
             float originStrokeWidth = mPaint.getStrokeWidth();
             mPaint.setStrokeJoin(Paint.Join.ROUND);
             mPaint.setStrokeCap(Paint.Cap.ROUND);
-            mPaint.setStrokeWidth(mDividerSize);
+            mPaint.setStrokeWidth(mDividerHeight);
             if (mDividerType == iRollerUtil.DIVIDER_TYPE_FILL) {
                 canvas.drawLine(mClipLeft, mSelectedItemTopLimit, mClipRight, mSelectedItemTopLimit, mPaint);
                 canvas.drawLine(mClipLeft, mSelectedItemBottomLimit, mClipRight, mSelectedItemBottomLimit, mPaint);
@@ -523,27 +511,27 @@ public class iWheelView<T> extends View implements Runnable {
 
         if (Math.abs(item2CenterOffsetY) <= 0) {
             //绘制选中的条目
-            mPaint.setColor(mSelectedItemTextColor);
+            mPaint.setColor(mTextColorSelect);
             clipAndDraw2DText(canvas, text, mSelectedItemTopLimit, mSelectedItemBottomLimit, item2CenterOffsetY, centerToBaselineY);
         } else if (item2CenterOffsetY > 0 && item2CenterOffsetY < mItemHeight) {
             //绘制与下边界交汇的条目
-            mPaint.setColor(mSelectedItemTextColor);
+            mPaint.setColor(mTextColorSelect);
             clipAndDraw2DText(canvas, text, mSelectedItemTopLimit, mSelectedItemBottomLimit, item2CenterOffsetY, centerToBaselineY);
 
-            mPaint.setColor(mTextColor);
+            mPaint.setColor(mTextColorNormal);
             clipAndDraw2DText(canvas, text, mSelectedItemBottomLimit, mClipBottom, item2CenterOffsetY, centerToBaselineY);
 
         } else if (item2CenterOffsetY < 0 && item2CenterOffsetY > -mItemHeight) {
             //绘制与上边界交汇的条目
-            mPaint.setColor(mSelectedItemTextColor);
+            mPaint.setColor(mTextColorSelect);
             clipAndDraw2DText(canvas, text, mSelectedItemTopLimit, mSelectedItemBottomLimit, item2CenterOffsetY, centerToBaselineY);
 
-            mPaint.setColor(mTextColor);
+            mPaint.setColor(mTextColorNormal);
             clipAndDraw2DText(canvas, text, mClipTop, mSelectedItemTopLimit, item2CenterOffsetY, centerToBaselineY);
 
         } else {
             //绘制其他条目
-            mPaint.setColor(mTextColor);
+            mPaint.setColor(mTextColorNormal);
             clipAndDraw2DText(canvas, text, mClipTop, mClipBottom, item2CenterOffsetY, centerToBaselineY);
         }
 
@@ -580,7 +568,7 @@ public class iWheelView<T> extends View implements Runnable {
     private int remeasureTextSize(String contentText) {
         float textWidth = mPaint.measureText(contentText);
         float drawWidth = getWidth();
-        float textMargin = mTextBoundaryMargin * 2;
+        float textMargin = mTextMargin * 2;
         //稍微增加了一点文字边距 最大为宽度的1/10
         if (textMargin > (drawWidth / 10f)) {
             drawWidth = drawWidth * 9f / 10f;
@@ -672,16 +660,16 @@ public class iWheelView<T> extends View implements Runnable {
         int centerToBaselineY = isAutoFitTextSize ? remeasureTextSize(text) : mCenterToBaselineY;
         if (Math.abs(item2CenterOffsetY) <= 0) {
             //绘制选中的条目
-            mPaint.setColor(mSelectedItemTextColor);
+            mPaint.setColor(mTextColorSelect);
             mPaint.setAlpha(255);
             clipAndDraw3DText(canvas, text, mSelectedItemTopLimit, mSelectedItemBottomLimit, rotateX, translateY, translateZ, centerToBaselineY);
         } else if (item2CenterOffsetY > 0 && item2CenterOffsetY < mItemHeight) {
             //绘制与下边界交汇的条目
-            mPaint.setColor(mSelectedItemTextColor);
+            mPaint.setColor(mTextColorSelect);
             mPaint.setAlpha(255);
             clipAndDraw3DText(canvas, text, mSelectedItemTopLimit, mSelectedItemBottomLimit, rotateX, translateY, translateZ, centerToBaselineY);
 
-            mPaint.setColor(mTextColor);
+            mPaint.setColor(mTextColorNormal);
             mPaint.setAlpha(alpha);
             //缩小字体，实现折射效果
             float textSize = mPaint.getTextSize();
@@ -692,11 +680,11 @@ public class iWheelView<T> extends View implements Runnable {
             mPaint.setTextSize(textSize);
         } else if (item2CenterOffsetY < 0 && item2CenterOffsetY > -mItemHeight) {
             //绘制与上边界交汇的条目
-            mPaint.setColor(mSelectedItemTextColor);
+            mPaint.setColor(mTextColorSelect);
             mPaint.setAlpha(255);
             clipAndDraw3DText(canvas, text, mSelectedItemTopLimit, mSelectedItemBottomLimit, rotateX, translateY, translateZ, centerToBaselineY);
 
-            mPaint.setColor(mTextColor);
+            mPaint.setColor(mTextColorNormal);
             mPaint.setAlpha(alpha);
 
             //缩小字体，实现折射效果
@@ -708,7 +696,7 @@ public class iWheelView<T> extends View implements Runnable {
             mPaint.setTextSize(textSize);
         } else {
             //绘制其他条目
-            mPaint.setColor(mTextColor);
+            mPaint.setColor(mTextColorNormal);
             mPaint.setAlpha(alpha);
 
             //缩小字体，实现折射效果
@@ -821,7 +809,7 @@ public class iWheelView<T> extends View implements Runnable {
             return ((iWheelEntity) item)._GetWheelText();
         } else if (item instanceof Integer) {
             //如果为整形则最少保留两位数.
-            return isIntegerNeedFormat ? String.format(Locale.getDefault(), mIntegerFormat, item) : String.valueOf(item);
+            return isIntNeedFormat ? String.format(Locale.getDefault(), mIntFormat, item) : String.valueOf(item);
         } else if (item instanceof String) {
             return (String) item;
         }
@@ -1348,7 +1336,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @return 未选中条目颜色 ColorInt
      */
     public int getNormalItemTextColor() {
-        return mTextColor;
+        return mTextColorNormal;
     }
 
     /**
@@ -1366,10 +1354,10 @@ public class iWheelView<T> extends View implements Runnable {
      * @param textColor 未选中条目颜色 {@link ColorInt}
      */
     public void setNormalItemTextColor(@ColorInt int textColor) {
-        if (mTextColor == textColor) {
+        if (mTextColorNormal == textColor) {
             return;
         }
-        mTextColor = textColor;
+        mTextColorNormal = textColor;
         invalidate();
     }
 
@@ -1379,7 +1367,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @return 选中条目颜色 ColorInt
      */
     public int getSelectedItemTextColor() {
-        return mSelectedItemTextColor;
+        return mTextColorSelect;
     }
 
     /**
@@ -1397,10 +1385,10 @@ public class iWheelView<T> extends View implements Runnable {
      * @param selectedItemTextColor 选中条目颜色 {@link ColorInt}
      */
     public void setSelectedItemTextColor(@ColorInt int selectedItemTextColor) {
-        if (mSelectedItemTextColor == selectedItemTextColor) {
+        if (mTextColorSelect == selectedItemTextColor) {
             return;
         }
-        mSelectedItemTextColor = selectedItemTextColor;
+        mTextColorSelect = selectedItemTextColor;
         invalidate();
     }
 
@@ -1410,7 +1398,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @return 外边距值
      */
     public float getTextBoundaryMargin() {
-        return mTextBoundaryMargin;
+        return mTextMargin;
     }
 
     /**
@@ -1429,9 +1417,9 @@ public class iWheelView<T> extends View implements Runnable {
      * @param isDp               单位是否为 dp
      */
     public void setTextBoundaryMargin(float textBoundaryMargin, boolean isDp) {
-        float tempTextBoundaryMargin = mTextBoundaryMargin;
-        mTextBoundaryMargin = isDp ? iRollerUtil.dp2px(textBoundaryMargin) : textBoundaryMargin;
-        if (tempTextBoundaryMargin == mTextBoundaryMargin) {
+        float tempTextBoundaryMargin = mTextMargin;
+        mTextMargin = isDp ? iRollerUtil.dp2px(textBoundaryMargin) : textBoundaryMargin;
+        if (tempTextBoundaryMargin == mTextMargin) {
             return;
         }
         requestLayout();
@@ -1479,20 +1467,20 @@ public class iWheelView<T> extends View implements Runnable {
      *
      * @return isIntegerNeedFormat
      */
-    public boolean isIntegerNeedFormat() {
-        return isIntegerNeedFormat;
+    public boolean isIntNeedFormat() {
+        return isIntNeedFormat;
     }
 
     /**
      * 设置数据为Integer类型时是否需要转换
      *
-     * @param isIntegerNeedFormat 数据为Integer类型时是否需要转换
+     * @param isIntNeedFormat 数据为Integer类型时是否需要转换
      */
-    public void setIntegerNeedFormat(boolean isIntegerNeedFormat) {
-        if (this.isIntegerNeedFormat == isIntegerNeedFormat) {
+    public void setIntNeedFormat(boolean isIntNeedFormat) {
+        if (this.isIntNeedFormat == isIntNeedFormat) {
             return;
         }
-        this.isIntegerNeedFormat = isIntegerNeedFormat;
+        this.isIntNeedFormat = isIntNeedFormat;
         calculateTextSize();
         requestLayout();
         invalidate();
@@ -1501,14 +1489,14 @@ public class iWheelView<T> extends View implements Runnable {
     /**
      * 同时设置 isIntegerNeedFormat=true 和 mIntegerFormat=integerFormat
      *
-     * @param integerFormat 注意：integerFormat 中必须包含并且只能包含一个格式说明符（format specifier）
-     *                      格式说明符请参照 http://java2s.com/Tutorials/Java/Data_Format/Java_Format_Specifier.htm
-     *                      <p>
-     *                      如果有多个格式说明符会抛出 java.util.MissingFormatArgumentException: Format specifier '%s'(多出来的说明符)
+     * @param intFormat 注意：integerFormat 中必须包含并且只能包含一个格式说明符（format specifier）
+     *                  格式说明符请参照 http://java2s.com/Tutorials/Java/Data_Format/Java_Format_Specifier.htm
+     *                  <p>
+     *                  如果有多个格式说明符会抛出 java.util.MissingFormatArgumentException: Format specifier '%s'(多出来的说明符)
      */
-    public void setIntegerNeedFormat(String integerFormat) {
-        isIntegerNeedFormat = true;
-        mIntegerFormat = integerFormat;
+    public void setIntNeedFormat(String intFormat) {
+        isIntNeedFormat = true;
+        mIntFormat = intFormat;
         calculateTextSize();
         requestLayout();
         invalidate();
@@ -1519,8 +1507,8 @@ public class iWheelView<T> extends View implements Runnable {
      *
      * @return integerFormat
      */
-    public String getIntegerFormat() {
-        return mIntegerFormat;
+    public String getIntFormat() {
+        return mIntFormat;
     }
 
     /**
@@ -1531,11 +1519,11 @@ public class iWheelView<T> extends View implements Runnable {
      *                      <p>
      *                      如果有多个格式说明符会抛出 java.util.MissingFormatArgumentException: Format specifier '%s'(多出来的说明符)
      */
-    public void setIntegerFormat(String integerFormat) {
-        if (TextUtils.isEmpty(integerFormat) || integerFormat.equals(mIntegerFormat)) {
+    public void setIntFormat(String integerFormat) {
+        if (TextUtils.isEmpty(integerFormat) || integerFormat.equals(mIntFormat)) {
             return;
         }
-        mIntegerFormat = integerFormat;
+        mIntFormat = integerFormat;
         calculateTextSize();
         requestLayout();
         invalidate();
@@ -1741,7 +1729,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @return 分割线高度
      */
     public float getDividerHeight() {
-        return mDividerSize;
+        return mDividerHeight;
     }
 
     /**
@@ -1760,9 +1748,9 @@ public class iWheelView<T> extends View implements Runnable {
      * @param isDp          单位是否是 dp
      */
     public void setDividerHeight(float dividerHeight, boolean isDp) {
-        float tempDividerHeight = mDividerSize;
-        mDividerSize = isDp ? iRollerUtil.dp2px(dividerHeight) : dividerHeight;
-        if (tempDividerHeight == mDividerSize) {
+        float tempDividerHeight = mDividerHeight;
+        mDividerHeight = isDp ? iRollerUtil.dp2px(dividerHeight) : dividerHeight;
+        if (tempDividerHeight == mDividerHeight) {
             return;
         }
         invalidate();
@@ -1857,7 +1845,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @return 是否绘制选中区域
      */
     public boolean isDrawSelectedRect() {
-        return isDrawSelectedRect;
+        return isDrawSelectRect;
     }
 
     /**
@@ -1866,7 +1854,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @param isDrawSelectedRect 是否绘制选中区域
      */
     public void setDrawSelectedRect(boolean isDrawSelectedRect) {
-        this.isDrawSelectedRect = isDrawSelectedRect;
+        this.isDrawSelectRect = isDrawSelectedRect;
         invalidate();
     }
 
@@ -1876,7 +1864,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @return 选中区域颜色 ColorInt
      */
     public int getSelectedRectColor() {
-        return mSelectedRectColor;
+        return mSelectRectColor;
     }
 
     /**
@@ -1894,7 +1882,7 @@ public class iWheelView<T> extends View implements Runnable {
      * @param selectedRectColor 选中区域颜色 {@link ColorInt}
      */
     public void setSelectedRectColor(@ColorInt int selectedRectColor) {
-        mSelectedRectColor = selectedRectColor;
+        mSelectRectColor = selectedRectColor;
         invalidate();
     }
 

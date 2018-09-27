@@ -33,12 +33,14 @@ import cn.adair.itooler.roller.wheel.iWheelView;
 public class DatePickerView extends LinearLayout implements OnItemSelectedListener<Integer> {
 
     private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-M-d", Locale.getDefault());
-    private YearWheelView mYearWv;
-    private MonthWheelView mMonthWv;
-    private DayWheelView mDayWv;
+    private iYearWheelView mYearWv;
+    private iMonthWheelView mMonthWv;
+    private iDayWheelView mDayWv;
     private AppCompatTextView mYearTv;
     private AppCompatTextView mMonthTv;
     private AppCompatTextView mDayTv;
+
+    private LinearLayout mLayoutMasklayer;
 
     private OnDateSelectedListener mOnDateSelectedListener;
 
@@ -64,6 +66,8 @@ public class DatePickerView extends LinearLayout implements OnItemSelectedListen
         mYearTv = findViewById(R.id.tv_year);
         mMonthTv = findViewById(R.id.tv_month);
         mDayTv = findViewById(R.id.tv_day);
+
+        mLayoutMasklayer = findViewById(R.id.layout_masklayer);
     }
 
     @Override
@@ -92,6 +96,15 @@ public class DatePickerView extends LinearLayout implements OnItemSelectedListen
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 设置遮罩层颜色
+     *
+     * @param maskColor
+     */
+    public void setLayoutMasklayerColor(@ColorInt int maskColor) {
+        mLayoutMasklayer.setBackgroundColor(maskColor);
     }
 
     /**
@@ -128,8 +141,6 @@ public class DatePickerView extends LinearLayout implements OnItemSelectedListen
 
     /**
      * 设置标签字体颜色
-     *
-     * @param textColor 颜色值
      */
     public void setLabelTextColor(@ColorInt int textColor) {
         mYearTv.setTextColor(textColor);
@@ -711,7 +722,7 @@ public class DatePickerView extends LinearLayout implements OnItemSelectedListen
      *
      * @return 年份 WheelView
      */
-    public YearWheelView getYearWv() {
+    public iYearWheelView getYearWv() {
         return mYearWv;
     }
 
@@ -720,7 +731,7 @@ public class DatePickerView extends LinearLayout implements OnItemSelectedListen
      *
      * @return 月份 WheelView
      */
-    public MonthWheelView getMonthWv() {
+    public iMonthWheelView getMonthWv() {
         return mMonthWv;
     }
 
@@ -729,7 +740,7 @@ public class DatePickerView extends LinearLayout implements OnItemSelectedListen
      *
      * @return 日 WheelView
      */
-    public DayWheelView getDayWv() {
+    public iDayWheelView getDayWv() {
         return mDayWv;
     }
 
