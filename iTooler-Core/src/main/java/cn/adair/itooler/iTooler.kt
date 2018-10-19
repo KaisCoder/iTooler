@@ -1,7 +1,7 @@
 package cn.adair.itooler
 
 import android.app.Application
-import android.content.Context
+import cn.adair.itooler.tooler.iSPer
 import cn.adair.itooler.tooler.iUuider
 
 /**
@@ -16,23 +16,17 @@ object iTooler {
 
     lateinit var iCtx: Application
 
-    fun init(context: Application): iTooler {
+    fun init(context: Application, debug: Boolean): iTooler {
         iCtx = context
-        return this
-    }
-
-    fun isDebug(isDebug: Boolean, tag: String): iTooler {
-        iTooler.isDebug = isDebug
-        TAG = tag
-        return this
-    }
-
-    /**
-     * 初始化其他
-     */
-    fun initOther(context: Context): iTooler {
+        isDebug = debug
         iUuider(context)
         return this
+    }
+
+    fun initOther(tag: String): iTooler {
+        TAG = tag
+        iSPer.init(iCtx)
+        return this;
     }
 
 }

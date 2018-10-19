@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import cn.adair.itooler.tooler.iSPer;
+
 /**
  * cn.adair.itooler_sample
  * Created by Administrator on 2018/6/11/011.
@@ -14,7 +16,8 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        iTooler.INSTANCE.init(this).isDebug(true, "iTooler").initOther(this);
+        iTooler.INSTANCE.init(this, true).initOther("iTooler");
+        iSPer.INSTANCE.set("TEST", "test");
     }
 
     /**
