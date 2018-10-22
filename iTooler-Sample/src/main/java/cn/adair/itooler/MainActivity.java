@@ -27,6 +27,7 @@ import cn.adair.itooler.roller.wheel.OnItemSelectedListener;
 import cn.adair.itooler.roller.wheel.iWheelView;
 import cn.adair.itooler.tooler.iFileer;
 import cn.adair.itooler.tooler.iLogger;
+import cn.adair.itooler.tooler.iSPer;
 import cn.adair.itooler.tooler.iToaster;
 import cn.adair.itooler.tooler.iUuider;
 import cn.adair.itooler.update.iUpdateManager;
@@ -122,6 +123,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionGranted() {
                         iLogger.INSTANCE.e("同意");
+
+                        iSPer.INSTANCE._Put("TEST", "test1");
+                        iSPer.INSTANCE._Put("DEMO", "demo1");
+                        iSPer.INSTANCE._Exist("TEST");
+                        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._Exist("TEST"));
+                        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._Exist("Demo"));
+                        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._GetAll().toString());
+                        iSPer.INSTANCE._Clear();
+
                     }
 
                     @Override

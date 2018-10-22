@@ -24,6 +24,7 @@ object iSPer {
 
     /**
      * 反射修改SharedPreferences 数据保存路径
+     * 新的数据保存路径需要权限，如无权限数据路径依然在无法修改
      */
     private fun _GetSharedPreferences(context: Context, fileName: String): SharedPreferences {
         try {
