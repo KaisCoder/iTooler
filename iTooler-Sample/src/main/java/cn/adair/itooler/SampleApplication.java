@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import cn.adair.itooler.tooler.iLogger;
 import cn.adair.itooler.tooler.iSPer;
 
 /**
@@ -17,7 +18,14 @@ public class SampleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         iTooler.INSTANCE.init(this, true).initOther("iTooler");
-        iSPer.INSTANCE.set("TEST", "test");
+        iSPer.INSTANCE._Put("TEST", "test");
+        iSPer.INSTANCE._Put("DEMO", "demo");
+        iSPer.INSTANCE._Exist("TEST");
+        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._Exist("TEST"));
+        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._Exist("Demo"));
+        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._GetAll().toString());
+        iSPer.INSTANCE._Clear();
+        iLogger.INSTANCE.e("----->" + iSPer.INSTANCE._GetAll().toString());
     }
 
     /**

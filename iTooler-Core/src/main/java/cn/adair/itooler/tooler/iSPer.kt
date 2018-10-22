@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
 import java.io.File
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
 
 /**
  * cn.adair.itooler.tooler
@@ -13,8 +15,8 @@ import java.io.File
  */
 object iSPer {
 
-    lateinit var mShPre: SharedPreferences
-    var FILE_PATH: String = iFileer.isFilePath("data")
+    private lateinit var mShPre: SharedPreferences
+    private var FILE_PATH: String = iFileer.isFilePath("data")
 
     fun init(context: Context) {
         mShPre = _GetSharedPreferences(context, "data")
@@ -22,10 +24,6 @@ object iSPer {
 
     /**
      * 反射修改SharedPreferences 数据保存路径
-     * @param context
-     * @param fileName
-     * @return isDebug = 返回修改路径(路径不存在会自动创建)以后的 SharedPreferences :%FILE_PATH%/%fileName%.xml<br></br>
-     * !isDebug = 返回默认路径下的 SharedPreferences : /data/data/%package_name%/shared_prefs/%fileName%.xml
      */
     private fun _GetSharedPreferences(context: Context, fileName: String): SharedPreferences {
         try {
@@ -54,14 +52,10 @@ object iSPer {
         return context.getSharedPreferences(fileName, Context.MODE_PRIVATE)
     }
 
-
     /**
      * 保存数据
-     *
-     * @param keyName
-     * @param value
      */
-    fun set(keyName: String, value: Any?) {
+    fun _Put(keyName: String, value: Any?) {
         val editor = mShPre.edit()
         if (value is String) {
             editor.putString(keyName, value as String?)
@@ -76,7 +70,98 @@ object iSPer {
         } else {
             editor.putString(keyName, value?.toString())
         }
-        editor.apply()
+        SharedPreferencesCompat.apply(editor)
+    }
+
+    /**
+     * 获取数据
+     */
+    fun _Get(keyName: String, defaultValue: Any): Any? {
+        val sp = mShPre
+        if (defaultValue is String) {
+            return sp.getString(keyName, defaultValue)
+        } else if (defaultValue is Int) {
+            return sp.getInt(keyName, defaultValue)
+        } else if (defaultValue is Boolean) {
+            return sp.getBoolean(keyName, defaultValue)
+        } else if (defaultValue is Float) {
+            return sp.getFloat(keyName, defaultValue)
+        } else if (defaultValue is Long) {
+            return sp.getLong(keyName, defaultValue)
+        }
+        return null
+    }
+
+    /**
+     * 移除数据
+     */
+    fun _Remove(keyName: String) {
+        val editor = mShPre.edit()
+        editor.remove(keyName)
+        SharedPreferencesCompat.apply(editor)
+    }
+
+    /**
+     * 清除所有数据
+     */
+    fun _Clear() {
+        val editor = mShPre.edit()
+        editor.clear()
+        SharedPreferencesCompat.apply(editor)
+    }
+
+    /**
+     * 查询某个key是否已经存在
+     */
+    fun _Exist(keyName: String): Boolean {
+        return mShPre.contains(keyName)
+    }
+
+    /**
+     * 返回所有的键值对
+     */
+    fun _GetAll(): Map<String, *> {
+        return mShPre.all
+    }
+
+    /**
+     *  创建一个解决SharedPreferencesCompat.apply方法的一个兼容类
+     */
+    private object SharedPreferencesCompat {
+
+        private val mApplyMethod = findApplyMethod()
+        /**
+         * 反射查找apply的方法
+         *
+         * @return
+         */
+        private fun findApplyMethod(): Method? {
+            try {
+                val clz = SharedPreferences.Editor::class.java
+                return clz.getMethod("apply")
+            } catch (e: NoSuchMethodException) {
+            }
+
+            return null
+        }
+
+        /**
+         * 如果找到则使用apply执行，否则使用commit
+         *
+         * @param editor
+         */
+        fun apply(editor: SharedPreferences.Editor) {
+            try {
+                if (mApplyMethod != null) {
+                    mApplyMethod.invoke(editor)
+                    return
+                }
+            } catch (e: IllegalArgumentException) {
+            } catch (e: IllegalAccessException) {
+            } catch (e: InvocationTargetException) {
+            }
+            editor.commit()
+        }
     }
 
 }
