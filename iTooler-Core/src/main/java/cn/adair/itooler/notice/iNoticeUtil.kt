@@ -41,7 +41,7 @@ object iNoticeUtil {
                 .setPriority(NotificationCompat.PRIORITY_MAX) // 设置优先级
                 .setWhen(System.currentTimeMillis())
                 .setDefaults(Notification.DEFAULT_ALL)
-                .setOngoing(true)
+                .setOngoing(false)
     }
 
     /**
